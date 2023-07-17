@@ -1,9 +1,9 @@
-package com.sparta.community.jwt;
+package com.sparta.community.security;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.community.dto.AuthRequestDto;
-import com.sparta.community.entity.UserRoleEnum;
-import com.sparta.community.security.UserDetailsImpl;
+import com.sparta.community.dto.LoginRequestDto;
+import com.sparta.community.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,14 +22,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/it/users/login");
+
+        // 내가 원하는 Url에서 필터가 동작하길 원한다면 setFilterProcessesUrl()로 Url를 설정해줘야 작동함.
+        setFilterProcessesUrl("/api/login");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("로그인 시도");
         try {
-            AuthRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), AuthRequestDto.class);
+            LoginRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
 
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -46,17 +47,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        log.info("로그인 성공 및 JWT 생성");
-        String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
-        UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
 
-        String token = jwtUtil.createToken(username, role);
-        jwtUtil.addJwtToCookie(token, response);
+        String username = ((UserDetailsImpl)authResult.getPrincipal()).getUsername();
+        //UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
+
+        // 토큰을 만들고
+        String token = jwtUtil.createToken(username);
+        // 헤더에 담아준다
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
+
+
+        // StatusResponseDto responseDto = new StatusResponseDto("로그인 성공", response.getStatus());
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        log.info("로그인 실패");
         response.setStatus(401);
     }
 }
