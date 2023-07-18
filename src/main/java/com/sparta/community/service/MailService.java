@@ -39,11 +39,11 @@ public class MailService {
         authcode = createCode(); // 코드 생성
 
         // 보내는 사람
-        String setFrom = "ftest9857@gmail.com";
+        String setFrom = "chaghani9898@gmail.com";
         // 받는 사람
         String toEmail = email;
         // 제목
-        String subject = "[인증번호] Interview Feed 회원가입 인증 번호";
+        String subject = "[인증번호] 회원가입 인증 번호";
 
         MimeMessage message = emailSender.createMimeMessage();
         message.addRecipients(MimeMessage.RecipientType.TO, email); // 보낼 이메일 설정
