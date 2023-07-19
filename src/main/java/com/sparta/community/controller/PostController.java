@@ -1,6 +1,6 @@
 package com.sparta.community.controller;
 
-import com.sparta.community.dto.ApiResponseDto;
+import com.sparta.community.dto.ApiResult;
 import com.sparta.community.dto.PostListResponseDto;
 import com.sparta.community.dto.PostRequestDto;
 import com.sparta.community.dto.PostResponseDto;
@@ -41,42 +41,42 @@ public class PostController {
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<ApiResponseDto> updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody PostRequestDto requestDto) {
+    public ResponseEntity<ApiResult> updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody PostRequestDto requestDto) {
         try {
             PostResponseDto result = postService.updatePost(id, requestDto, userDetails.getUser());
             return ResponseEntity.ok().body(result);
         } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("작성자만 수정 할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new ApiResult("작성자만 수정 할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
         }
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<ApiResponseDto> deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+    public ResponseEntity<ApiResult> deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         try {
             postService.deletePost(id, userDetails.getUser());
-            return ResponseEntity.ok().body(new ApiResponseDto("게시글 삭제 성공", HttpStatus.OK.value()));
+            return ResponseEntity.ok().body(new ApiResult("게시글 삭제 성공", HttpStatus.OK.value()));
         } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("작성자만 삭제 할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new ApiResult("작성자만 삭제 할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
         }
     }
 
     @PostMapping("/posts/{id}/likes")
-    public ResponseEntity<ApiResponseDto> likePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+    public ResponseEntity<ApiResult> likePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         try {
             postService.likePost(userDetails, id);
         } catch (DuplicateRequestException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new ApiResult(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponseDto("게시글 좋아요 성공", HttpStatus.OK.value()));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResult("게시글 좋아요 성공", HttpStatus.OK.value()));
     }
 
     @DeleteMapping("/posts/{id}/likes")
-    public ResponseEntity<ApiResponseDto> deleteLikePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+    public ResponseEntity<ApiResult> deleteLikePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         try {
             postService.deleteLikePost(userDetails, id);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new ApiResult(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto("게시글 좋아요 취소 성공", HttpStatus.OK.value()));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResult("게시글 좋아요 취소 성공", HttpStatus.OK.value()));
     }
 }

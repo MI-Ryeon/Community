@@ -2,6 +2,7 @@ package com.sparta.community.service;
 
 import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.entity.User;
+import com.sparta.community.entity.UserRoleEnum;
 import com.sparta.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     public void signup(SignupRequestDto requestDto) {
         // pw 변환
@@ -26,8 +28,17 @@ public class UserService {
         // email 중복 확인
         checkEmail(requestDto.getEmail());
 
+        // role 부여
+        UserRoleEnum role = UserRoleEnum.USER;
+        if (requestDto.isAdmin()) {
+            if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
+                throw new IllegalArgumentException("관리자 암호가 틀렸습니다.");
+            }
+            role = UserRoleEnum.ADMIN;
+        }
+
         // 사용자 DB에 등록
-        userRepository.save(new User(requestDto, password));
+        userRepository.save(new User(requestDto, password, role));
     }
 
     // username 중복 확인

@@ -27,6 +27,7 @@ public class UserController {
     public String loginPage() {
         return "login";
     }
+
     @GetMapping("/signup-page")
     public String signupPage() {
         return "signup";
@@ -36,7 +37,7 @@ public class UserController {
     public String signup(@Valid SignupRequestDto requestDto, BindingResult bindingResult) {
         // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if(fieldErrors.size() > 0) {
+        if (fieldErrors.size() > 0) {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
             }

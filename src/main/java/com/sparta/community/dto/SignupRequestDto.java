@@ -28,4 +28,7 @@ public class SignupRequestDto {
 
     @NotBlank
     private String nickname;
+
+    private boolean admin = false; // 회원 권한 (ADMIN, USER)
+    private String adminToken = "";
 }
