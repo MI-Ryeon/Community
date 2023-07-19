@@ -1,45 +1,47 @@
 package com.sparta.community.service;
 
-import com.sparta.community.dto.AuthRequestDto;
+import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.entity.User;
-import com.sparta.community.entity.UserRoleEnum;
 import com.sparta.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public void signup(AuthRequestDto requestDto) {
-        String username = requestDto.getUsername();
+    public void signup(SignupRequestDto requestDto) {
+        // pw 변환
         String password = passwordEncoder.encode(requestDto.getPassword());
-        UserRoleEnum role = requestDto.getRole();
 
-        if (userRepository.findByUsername(username).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
-        }
+        // username 중복 확인
+        checkUsername(requestDto.getUsername());
 
-        User user = new User(username, password, role);
-        userRepository.save(user);
+        // email 중복 확인
+        checkEmail(requestDto.getEmail());
+
+        // 사용자 DB에 등록
+        userRepository.save(new User(requestDto, password));
     }
 
-    public void login(AuthRequestDto requestDto) {
-        String username = requestDto.getUsername();
-        String password = requestDto.getPassword();
-
-        //사용자 확인 (username 이 없는 경우)
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
-        );
-
-        //비밀번호 확인 (password 가 다른 경우)
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+    // username 중복 확인
+    public void checkUsername(String username) {
+        Optional<User> checkUsername = userRepository.findByUsername(username);
+        if (checkUsername.isPresent()) {
+            throw new IllegalArgumentException("입력하신 ID는 이미 존재하는 ID 입니다.");
+        }
+    }
+    // email 중복 확인
+    public void checkEmail(String email) {
+        Optional<User> checkEmail = userRepository.findByEmail(email);
+        if (checkEmail.isPresent()) {
+            throw new IllegalArgumentException("이미 회원가입 된 이메일 입니다.");
         }
     }
 }
