@@ -65,13 +65,13 @@ public class FollowService {
         List<Follow> followList = followRepository.findAllByFollowerUser(user);
         List<User> userList = new ArrayList<>();
 
-        for(Follow follow : followList) {
+        for (Follow follow : followList) {
             userList.add(follow.getFollowingUser());
         }
 
-        for(User foundUser : userList) {
+        for (User foundUser : userList) {
             List<Post> foundPostList = postRepository.findAllByUser(foundUser);
-            postList.addAll(foundPostList.stream().map(PostResponseDto :: new).toList());
+            postList.addAll(foundPostList.stream().map(PostResponseDto::new).toList());
         }
 
         return postList;

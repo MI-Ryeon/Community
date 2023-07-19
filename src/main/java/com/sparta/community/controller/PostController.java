@@ -25,21 +25,18 @@ public class PostController {
     @PostMapping("/posts")
     public ResponseEntity<PostResponseDto> createPost(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PostRequestDto requestDto) {
         PostResponseDto result = postService.createPost(requestDto, userDetails.getUser());
-
         return ResponseEntity.status(201).body(result);
     }
 
     @GetMapping("/posts")
     public ResponseEntity<PostListResponseDto> getPosts() {
         PostListResponseDto result = postService.getPosts();
-
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/posts/{id}")
     public ResponseEntity<PostResponseDto> getPostById(@PathVariable Long id) {
         PostResponseDto result = postService.getPostById(id);
-
         return ResponseEntity.ok().body(result);
     }
 

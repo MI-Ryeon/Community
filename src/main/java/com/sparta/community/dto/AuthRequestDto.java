@@ -1,6 +1,5 @@
 package com.sparta.community.dto;
 
-import com.sparta.community.entity.UserRoleEnum;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;

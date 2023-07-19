@@ -20,8 +20,9 @@ import java.util.List;
 public class FollowController {
 
     private final FollowService followService;
+
     @PostMapping("/following")
-    public ResponseEntity<ApiResponseDto> followUser (@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody FollowRequestDto followRequestDto) {
+    public ResponseEntity<ApiResponseDto> followUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody FollowRequestDto followRequestDto) {
         try {
             followService.followUser(userDetails, followRequestDto);
         } catch (DuplicateRequestException e) {
@@ -31,7 +32,7 @@ public class FollowController {
     }
 
     @DeleteMapping("/following")
-    public ResponseEntity<ApiResponseDto> unFollowUser (@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody FollowRequestDto followRequestDto) {
+    public ResponseEntity<ApiResponseDto> unFollowUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody FollowRequestDto followRequestDto) {
         try {
             followService.unFollowUser(userDetails, followRequestDto);
         } catch (DuplicateRequestException e) {

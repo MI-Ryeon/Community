@@ -16,6 +16,7 @@ import java.util.concurrent.RejectedExecutionException;
 @RequiredArgsConstructor
 public class CommentService {
     private final PostService postService;
+    private final AdminService adminService;
     private final CommentRepository commentRepository;
     private final CommentLikeRepository commentLikeRepository;
 

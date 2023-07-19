@@ -1,19 +1,20 @@
 package com.sparta.community.controller;
 
-import com.sparta.community.dto.AdminUserListResponseDto;
-import com.sparta.community.dto.AdminUserResponseDto;
-import com.sparta.community.dto.ApiResponseDto;
+import com.sparta.community.dto.*;
 import com.sparta.community.entity.UserRoleEnum;
 import com.sparta.community.security.UserDetailsImpl;
 import com.sparta.community.service.AdminService;
 import com.sparta.community.service.CommentService;
 import com.sparta.community.service.PostService;
+import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.RejectedExecutionException;
 
 @Secured(UserRoleEnum.Authority.ADMIN)
 @RestController
