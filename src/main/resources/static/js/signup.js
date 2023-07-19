@@ -30,7 +30,7 @@ function confirm_username() {
         // data: JSON.stringify(username)
     }).done(function (data, textStatus, xhr) {
         if (data !== '') {
-            alert('사용할 수 없는 아이디 입니다.');
+            alert('중복된 아이디 입니다.');
             return;
         }
         alert('사용할 수 있는 아이디 입니다.');
@@ -101,8 +101,27 @@ function confirm_email() {
         // data: JSON.stringify(email)
     }).done(function (data, textStatus, xhr) {
         if (data !== '') {
-            alert('사용할 수 없는 이메일 입니다.');
+            alert('중복된 이메일 입니다.');
             return;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/api/email/send-email',
+                contentType: "application/json",
+                data: JSON.stringify(email)
+            }).done(function (data, textStatus, xhr) {
+                alert('메일에 적힌 인증코드를 입력해주세요.');
+
+                // **** 인증 코드 입력 창을 연다
+                var box = document.getElementById("confirm_email_box");
+                box.style.display = "block";
+
+                return;
+            })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    alert('메일 전송에 실패했습니다.' + errorThrown);
+                    return;
+                });
         }
     })
         .fail(function (xhr, textStatus, errorThrown) {
@@ -112,24 +131,7 @@ function confirm_email() {
 
 
     // ***** 중복 검사를 통과하면 메일을 보낸다
-    $.ajax({
-        type: 'POST',
-        url: '/api/email/send-email',
-        contentType: "application/json",
-        data: JSON.stringify(email)
-    }).done(function (data, textStatus, xhr) {
-        alert('메일에 적힌 인증코드를 입력해주세요.');
 
-        // **** 인증 코드 입력 창을 연다
-        var box = document.getElementById("confirm_email_box");
-        box.style.display = "block";
-
-        return;
-    })
-        .fail(function (xhr, textStatus, errorThrown) {
-            alert('메일 전송에 실패했습니다.' + errorThrown);
-            return;
-        });
 }
 
 function confirm_authcode() {
@@ -156,10 +158,10 @@ function confirm_authcode() {
 
 function toggle_pw() {
 
-    if($("#pw-check").is(":checked")){
+    if ($("#pw-check").is(":checked")) {
         $('#pw1').prop("type", "text");
         $('#pw2').prop("type", "text");
-    }else{
+    } else {
         $('#pw1').prop("type", "password");
         $('#pw2').prop("type", "password");
     }

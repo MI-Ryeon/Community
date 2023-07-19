@@ -26,7 +26,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     // 게시글 작성 시 보일 닉네임 (부리)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nickname;
     // 한줄 소개
     @Column

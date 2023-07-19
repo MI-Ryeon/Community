@@ -41,7 +41,7 @@ public class UserService {
     public void checkEmail(String email) {
         Optional<User> checkEmail = userRepository.findByEmail(email);
         if (checkEmail.isPresent()) {
-            new IllegalArgumentException("이미 회원가입 된 이메일 입니다.");
+            throw new IllegalArgumentException("이미 회원가입 된 이메일 입니다.");
         }
     }
 }
