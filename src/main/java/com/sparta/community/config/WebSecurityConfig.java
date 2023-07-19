@@ -28,7 +28,6 @@ public class WebSecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         // BCrypt = Hash 함수 종류 중 하나
@@ -44,7 +43,7 @@ public class WebSecurityConfig {
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil);
         filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
-        return  filter;
+        return filter;
     }
 
     @Bean
@@ -53,7 +52,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //CSRF 설정
         http.csrf((csrf) -> csrf.disable());
 

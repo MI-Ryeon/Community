@@ -1,11 +1,18 @@
 package com.sparta.community.security;
 
 import com.sparta.community.entity.User;
+import com.sparta.community.entity.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * 3. 인증정보 구현체
+ * UserDetails 구현체 > UserDetailsImpl
+ */
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
@@ -15,7 +22,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
     @Override
@@ -30,15 +37,14 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //UserRoleEnum role = user.getRole();
-        //String authority = role.getAuthority();
+        UserRoleEnum role = user.getRole();
+        String authority = role.getAuthority();
 
-        //SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
-        //Collection<GrantedAuthority> authorities = new ArrayList<>();
-        //authorities.add(simpleGrantedAuthority);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(simpleGrantedAuthority);
 
-        //return authorities;
-        return null;
+        return authorities;
     }
 
     @Override

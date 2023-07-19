@@ -31,8 +31,11 @@ public class User {
     // 한줄 소개
     @Column
     private String one_liner;
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
 
-    public User(SignupRequestDto signupRequestDto, String password){
+    public User(SignupRequestDto signupRequestDto, String password, UserRoleEnum role) {
         this.username = signupRequestDto.getUsername();
         this.password = password;
 
@@ -40,10 +43,11 @@ public class User {
         this.nickname = signupRequestDto.getNickname();
 
         this.one_liner = "자기소개를 입력해주세요.";
+        this.role = role;
     }
 
     // User 받기?
-    public User(UserRequestDto userRequestDto){
+    public User(UserRequestDto userRequestDto) {
         this.username = userRequestDto.getUsername();
 
         this.email = userRequestDto.getEmail();
