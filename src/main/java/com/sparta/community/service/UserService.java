@@ -1,39 +1,47 @@
 package com.sparta.community.service;
 
-import com.sparta.community.dto.AuthRequestDto;
+import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.entity.User;
-import com.sparta.community.entity.UserRoleEnum;
 import com.sparta.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
-
-    public void signup(AuthRequestDto requestDto) {
-        String username = requestDto.getUsername();
+    public void signup(SignupRequestDto requestDto) {
+        // pw 변환
         String password = passwordEncoder.encode(requestDto.getPassword());
 
-        if (userRepository.findByUsername(username).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
-        }
+        // username 중복 확인
+        checkUsername(requestDto.getUsername());
 
-        UserRoleEnum role = UserRoleEnum.USER;
-        if (requestDto.isAdmin()) {
-            if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
-                throw new IllegalArgumentException("관리자 암호가 틀렸습니다.");
-            }
-            role = UserRoleEnum.ADMIN;
-        }
+        // email 중복 확인
+        checkEmail(requestDto.getEmail());
 
-        User user = new User(username, password, role);
-        userRepository.save(user);
+        // 사용자 DB에 등록
+        userRepository.save(new User(requestDto, password));
+    }
+
+    // username 중복 확인
+    public void checkUsername(String username) {
+        Optional<User> checkUsername = userRepository.findByUsername(username);
+        if (checkUsername.isPresent()) {
+            throw new IllegalArgumentException("입력하신 ID는 이미 존재하는 ID 입니다.");
+        }
+    }
+    // email 중복 확인
+    public void checkEmail(String email) {
+        Optional<User> checkEmail = userRepository.findByEmail(email);
+        if (checkEmail.isPresent()) {
+            throw new IllegalArgumentException("이미 회원가입 된 이메일 입니다.");
+        }
     }
 }
