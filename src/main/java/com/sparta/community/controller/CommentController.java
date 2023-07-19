@@ -55,7 +55,7 @@ public class CommentController {
         } catch (DuplicateRequestException e) {
             return ResponseEntity.badRequest().body(new ApiResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ApiResponseDto("게시글 좋아요 성공", HttpStatus.OK.value()));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDto("게시글 좋아요 성공", HttpStatus.OK.value()));
     }
 
     @DeleteMapping("/comments/{id}/likes")

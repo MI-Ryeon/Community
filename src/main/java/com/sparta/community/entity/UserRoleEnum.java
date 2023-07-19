@@ -2,7 +2,6 @@ package com.sparta.community.entity;
 
 public enum UserRoleEnum {
 
-
     USER(Authority.USER),
 
     ADMIN(Authority.ADMIN);

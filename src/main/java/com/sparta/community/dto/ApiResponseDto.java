@@ -11,9 +11,9 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponseDto {
     private String message;
-    private Integer statusCode;
+    private int statusCode;
 
-    public ApiResponseDto(String message, Integer statusCode) {
+    public ApiResponseDto(String message, int statusCode) {
         this.message = message;
         this.statusCode = statusCode;
     }

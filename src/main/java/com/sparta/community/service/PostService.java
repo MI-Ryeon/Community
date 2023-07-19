@@ -34,7 +34,7 @@ public class PostService {
     }
 
     public PostListResponseDto getPosts() {
-        List<PostResponseDto> postList = postRepository.findAll().stream()
+        List<PostResponseDto> postList = postRepository.findAllByOrderByModifiedAtDesc().stream()
                 .map(PostResponseDto::new)
                 .collect(Collectors.toList());
 
