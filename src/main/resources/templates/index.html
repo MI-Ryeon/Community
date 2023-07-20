@@ -1,0 +1,51 @@
+지
+<body>
+
+<div class="box">
+    <input id="username" name="username" type="text" placeholder="Username"/>
+    <input id="password" name="password" type="password" placeholder="Password"/>
+
+    <div class="login_box">
+        <button id="btn1" onclick="onLogin()">Log in</button>
+        <button id="btn2" onclick="location.href='/it/users/signup-page'">Sign up</button>
+    </div>
+
+</div>
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        // 토큰 삭제
+        Cookies.remove('Authorization', {path: '/'});
+    });
+
+    const href = location.href;
+    const queryString = href.substring(href.indexOf("?") + 1)
+    if (queryString === 'error') {
+        const errorDiv = document.getElementById('login-failed');
+        errorDiv.style.display = 'block';
+    }
+
+    const host = 'http://' + window.location.host;
+
+    function onLogin() {
+        let username = $('#username').val();
+        let password = $('#password').val();
+
+        $.ajax({
+            type: "POST",
+            url: `/it/users/login`,
+            contentType: "application/json",
+            data: JSON.stringify({username: username, password: password}),
+        })
+            .done(function (res, status, xhr) {
+                window.location.href = host;
+            })
+            .fail(function (xhr, textStatus, errorThrown) {
+                console.log('statusCode: ' + xhr.status);
+                window.location.href = host + '/api/user/login-page?error'
+            });
+    }
+</script>
+</html>

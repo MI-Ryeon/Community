@@ -1,0 +1,113 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --padding: 60px;
+}
+.box {
+    position: relative;
+    margin: 50px auto;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--padding);
+    background-color: #c4dfff;
+    border-radius: 7px;
+}
+
+.box input,
+.box button {
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+}
+.box input {
+    margin-bottom: 25px;
+}
+
+.login_box button {
+    background-color: #ffe4c4;
+    color: #547fb2;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/*==============================================*/
+
+.signup_box {
+    position: relative;
+    margin: 50px auto;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--padding);
+    background-color: #a3c3f4;
+    border-radius: 7px;
+}
+
+.signup_box input {
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+    margin-bottom: 25px;
+}
+
+/* 아이디 중복 확인 버튼 스타일 */
+.confirm-button {
+    background-color: #547fb2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 이메일 인증 버튼 스타일 */
+.confirm-button {
+    background-color: #547fb2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 입력한 비밀번호 보기 체크박스 스타일 */
+#pw-check {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+/* Sign up 버튼 스타일 */
+#btn2 {
+    background-color: #ffe4c4;
+    color: #547fb2;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/*==============================================*/
+
+
+
+

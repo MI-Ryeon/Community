@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+    <script src="/js/signup.js"></script>
+
+    <script>
+        function signup() {
+            let username = $('#username').val();
+            let password = $('#password').val();
+            let email = $('#email').val();
+
+            $.ajax({
+                type: "POST",
+                url: `/it/users/signup`,
+                contentType: "application/json",
+                data: JSON.stringify({username: username, password: password,email: email}),
+            })
+                .done(function (res, status, xhr) {
+                    window.location.href = host;
+                    alert('회원가입 성공');
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    console.log('statusCode: ' + xhr.status);
+                    window.location.href = host + '/api/user/login-page?error'
+                });
+        }
+    </script>
+
+</head>
+<body>
+<div class="signup_box">
+    <form action="/it/users/signup" method="post">
+        <input type="text" id="username" name="username" placeholder="Username"/>
+        <!--
+        <div class="login-check-label" id="check_regexp_username">확인문구들어감</div>
+        <button type="button" class="confirm-button" onclick="confirm_username()">아이디 중복 확인</button>
+        -->
+
+        <input type="password" id="password"  name="password" placeholder="Password"/>
+        <!--
+        <div class="login-check-label" id="check_regexp_pw"></div>
+
+
+        <input type="password" placeholder="Password Check"/><br>
+        <input id="pw-check" type="checkbox" onclick="toggle_pw()">입력한 비밀번호 보기
+        <div class="login-check-label" id="check_accord_pw"></div>
+        -->
+
+
+        <input type="email" id="email" name="email" placeholder="Email"/>
+        <div class="login-check-label" id="check_regexp_email"></div>
+        <button type="button" class="confirm-button" onclick="confirm_email()">이메일 인증</button>
+
+
+        <div class = "signup">
+            <button id="btn2" onclick="signup()" >Sign up</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

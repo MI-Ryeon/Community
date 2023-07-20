@@ -65,16 +65,23 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
 
+        //로그인 화면으로 넘어가기~
+        http.formLogin((formLogin) ->
+                formLogin
+                        .loginPage("/it/users/login-page").permitAll()
+                        .loginProcessingUrl("/it/users/login").permitAll()
+        );
+
         // 필터 관리
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // 접근 불가 페이지
-        http.exceptionHandling((exceptionHandling) ->
-                exceptionHandling
-                        // "접근 불가" 페이지 URL 설정
-                        .accessDeniedPage("/forbidden.html")
-        );
+//        http.exceptionHandling((exceptionHandling) ->
+//                exceptionHandling
+//                        // "접근 불가" 페이지 URL 설정
+//                        .accessDeniedPage("/forbidden.html")
+//        );
 
         return http.build();
     }

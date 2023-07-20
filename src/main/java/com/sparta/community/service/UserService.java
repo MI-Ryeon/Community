@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -18,13 +20,12 @@ public class UserService {
     public void signup(AuthRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
-        UserRoleEnum role = requestDto.getRole();
+        UserRoleEnum role = UserRoleEnum.USER;
+        String email =requestDto.getEmail();
 
-        if (userRepository.findByUsername(username).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
-        }
+        idCheck(username);
 
-        User user = new User(username, password, role);
+        User user = new User(username, password, role,email);
         userRepository.save(user);
     }
 
@@ -41,5 +42,13 @@ public class UserService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+    }
+
+    public void idCheck(String username) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+        }
+
+
     }
 }

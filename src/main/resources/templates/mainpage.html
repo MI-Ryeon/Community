@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <meta charset="UTF-8">
+  <title>게시글 조회 페이지</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .username {
+      font-weight: bold;
+    }
+
+    .logout-btn {
+      font-size: 14px;
+      color: #999999;
+    }
+
+    .post-list {
+      margin-top: 20px;
+    }
+
+    .post {
+      border-bottom: 1px solid #dddddd;
+      padding: 10px 0;
+    }
+
+    .post .post-info {
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .post .post-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .post .post-likes {
+      font-size: 14px;
+      color: #999999;
+      margin-top: 5px;
+    }
+
+    .sidebar {
+      float: right;
+      width: 200px;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="profile">
+    <img src="profile.jpg" alt="프로필 사진" class="profile-image">
+    <div class="username" id="profile-username"></div>
+    <button onclick="logout()" class="logout-btn">로그아웃</button>
+  </div>
+
+  <div class="post-list" id="post-list">
+    <!-- 게시글 목록은 JavaScript를 통해 동적으로 생성됩니다. -->
+  </div>
+</div>
+
+<script>
+  // 로그아웃 기능 예시
+  function logout() {
+      // 토큰 삭제
+      Cookies.remove('Authorization', {path: '/'});
+    alert('로그아웃되었습니다.');
+  }
+
+  // 프로필 정보 가져오기 (예시)
+  const profile = {
+    username: '사용자명',
+    profileImage: 'profile.jpg'
+    // 추가적인 프로필 정보...
+  };
+
+
+  // 피드데이터 가져오기
+  function postlist() {
+    $.ajax({
+      type: "GET",
+      url: `/it/posts`,
+    });
+
+    // 프로필 정보 표시 (예시)
+    document.getElementById('profile-username').textContent = profile.username;
+    document.querySelector('.profile-image').src = profile.profileImage;
+
+    // 게시글 목록 생성 함수
+    function createPostElement(post) {
+      const postElement = document.createElement('div');
+      postElement.classList.add('post');
+
+      const postInfo = document.createElement('div');
+      postInfo.classList.add('post-info');
+      postInfo.innerHTML = `
+        <span class="post-number">${post.id}</span>
+        <span class="post-author">${post.author}</span>
+        <span class="post-date">${post.date}</span>
+      `;
+      postElement.appendChild(postInfo);
+
+      const postTitle = document.createElement('div');
+      postTitle.classList.add('post-title');
+      postTitle.textContent = post.title;
+      postElement.appendChild(postTitle);
+
+      const postLikes = document.createElement('div');
+      postLikes.classList.add('post-likes');
+      postLikes.textContent = `좋아요 개수: ${post.likes}`;
+      postElement.appendChild(postLikes);
+
+      return postElement;
+    }
+
+    // 게시글 목록을 생성하여 화면에 추가
+    const postContainer = document.getElementById('post-container');
+    posts.forEach(post => {
+      const postElement = createPostElement(post);
+      postContainer.appendChild(postElement);
+    });
+  }
+</script>
+</body>
+</html>
