@@ -4,6 +4,7 @@ import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.dto.UserInfoDto;
 import com.sparta.community.dto.UserUpdateDto;
 import com.sparta.community.entity.User;
+import com.sparta.community.entity.UserRoleEnum;
 import com.sparta.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -24,14 +25,19 @@ public class UserService {
         // pw 변환
         String password = passwordEncoder.encode(requestDto.getPassword());
 
+        String username = requestDto.getUsername();
+        String email = requestDto.getEmail();
+        UserRoleEnum role = UserRoleEnum.USER;
+
         // username 중복 확인
         checkUsername(requestDto.getUsername());
 
         // email 중복 확인
         checkEmail(requestDto.getEmail());
 
-        // 사용자 DB에 등록
-        userRepository.save(new User(requestDto, password));
+        User user = new User(username,password,email,role);
+        userRepository.save(user);
+
     }
 
     // username 중복 확인

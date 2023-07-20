@@ -5,7 +5,6 @@ import com.sparta.community.dto.UserRequestDto;
 import com.sparta.community.dto.UserUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Profile;
 
 // 사용자 정보를 담은 엔티티
 
@@ -32,11 +31,14 @@ public class User {
     @Column
     private String ImgUrl;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
+
 
     public User(SignupRequestDto signupRequestDto, String password){
         this.username = signupRequestDto.getUsername();
         this.password = password;
-
         this.email = signupRequestDto.getEmail();
         this.oneLiner = "자기소개를 입력해주세요.";
         this.ImgUrl = "";
@@ -53,12 +55,19 @@ public class User {
         this.ImgUrl = "";
     }
 
+    public User(String username, String password, String email, UserRoleEnum role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
 
     // 회원정보 수정
     public void update(UserRequestDto requestDto) {
         // id를 어떻게 해야하나
         this.username = requestDto.getUsername();
-        this.email = requestDto.getEmail(); // 이메일 수정...??
+        this.password = requestDto.getPassword();
         this.oneLiner = requestDto.getOneLiner();
         this.ImgUrl = requestDto.getImgUrl();
 

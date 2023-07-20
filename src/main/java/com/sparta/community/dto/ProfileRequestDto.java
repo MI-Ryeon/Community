@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginRequestDto {
-
+public class ProfileRequestDto {
     private String username;
     private String password;
+    private String imageUrl;
+    private String oneLiner;
 }

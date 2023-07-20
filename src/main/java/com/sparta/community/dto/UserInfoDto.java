@@ -12,4 +12,7 @@ public class UserInfoDto {
     String oneLiner;
     String ImgUrl;
 
+    public UserInfoDto(String username) {
+        this.username = username;
+    }
 }

@@ -25,7 +25,7 @@ function confirm_username() {
 
     $.ajax({
         type: 'POST',
-        url: '/api/signup/confirm-username/' + encodeURIComponent(username),
+        url: '/api/user/signup/confirm-username/' + encodeURIComponent(username),
         contentType: "application/json",
         // data: JSON.stringify(username)
     }).done(function (data, textStatus, xhr) {
@@ -96,7 +96,7 @@ function confirm_email() {
 
     $.ajax({
         type: 'POST',
-        url: '/api/signup/confirm-email/' + encodeURIComponent(email),
+        url: '/api/user/signup/confirm-email/' + encodeURIComponent(email),
         contentType: "application/json",
         // data: JSON.stringify(email)
     }).done(function (data, textStatus, xhr) {

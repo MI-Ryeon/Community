@@ -1,5 +1,6 @@
 package com.sparta.community.jwt;
 
+import com.sparta.community.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -54,14 +55,14 @@ public class JwtUtil {
 
     /* 1. JWT 생성 */
     // 토큰 생성
-    public String createToken(String username) {
+    public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
 
         return BEARER_PREFIX +
                 Jwts.builder()
 
                         .setSubject(username) // 사용자 식별자값 (ID)
-                        //.claim(AUTHORIZATION_KEY, role) // 사용자 권한
+                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
@@ -71,23 +72,21 @@ public class JwtUtil {
 
     /* 2. 생성된 JWT를 Cookie에 저장 */
     // JWT Cookie에 저장
-    public void addJwtToCookie(String token, HttpServletResponse res) throws IOException {
-
+    public void addJwtToCookie(String token, HttpServletResponse res) {
         try {
-            // Cookie Value에는 공백이 불가능해서 encoding 진행
-            token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20");
+
+            token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
 
             Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
             cookie.setPath("/");
 
-            // Response 객체에 Cookie 추가
+// Response 객체에 Cookie 추가
             res.addCookie(cookie);
-
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage());
-            throw new IOException(e.getMessage());
         }
     }
+
 
     /* 3. Cookie에 들어있던 JWT 토큰을 Substring */
     // JWT 토큰 substring
@@ -98,17 +97,6 @@ public class JwtUtil {
         }
         logger.error("Not Found Token");
         throw new NullPointerException("Not Found Token");
-    }
-
-
-    // header에서 JWT 가져오기
-    public String getJwtFromHeader(HttpServletRequest request) {
-
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 
 
