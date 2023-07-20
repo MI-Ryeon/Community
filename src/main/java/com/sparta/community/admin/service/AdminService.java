@@ -1,9 +1,9 @@
-package com.sparta.community.service;
+package com.sparta.community.admin.service;
 
-import com.sparta.community.dto.AdminUserListResponseDto;
-import com.sparta.community.dto.AdminUserResponseDto;
-import com.sparta.community.entity.User;
-import com.sparta.community.repository.UserRepository;
+import com.sparta.community.admin.dto.AdminUserListResponseDto;
+import com.sparta.community.admin.dto.AdminUserResponseDto;
+import com.sparta.community.user.entity.User;
+import com.sparta.community.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

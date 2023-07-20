@@ -1,5 +1,6 @@
-package com.sparta.community.dto;
+package com.sparta.community.admin.dto;
 
+import com.sparta.community.admin.dto.AdminUserResponseDto;
 import lombok.Getter;
 
 import java.util.List;
