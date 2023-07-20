@@ -22,8 +22,9 @@ public class UserRequestDto {
     private String email;
 
     @NotBlank
-    private String nickname;
-    private String one_liner;
+    private String oneLiner;
+
+    private String ImgUrl;
 
     // 권한
     // private boolean admin = false;

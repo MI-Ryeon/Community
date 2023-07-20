@@ -53,7 +53,7 @@
                         const username = res.username;
                         const nickname = res.nickname;
                         const email = res.email;
-                        const one_liner = res.one_liner;
+                        const oneLiner = res.oneLiner;
 
                         // user 없는 상태면 로그인으로 보내버리기
                         if (!username) {
@@ -64,9 +64,8 @@
 
                         // html에 값 세팅하기
                         $('#username').text(username);
-                        $('#nickname').text(nickname);
                         $('#email').text(email);
-                        $('#one_liner').text(one_liner);
+                        $('#oneLiner').text(oneLiner);
 
                     })
                     .fail(function (jqXHR, textStatus) {
@@ -103,7 +102,7 @@
                 <button color="transparent" class="sc-jrQzAO cFunXL">이미지 제거</button>
             </div> -->
             <div class="info-area"><h2><span id="nickname"></span></h2> <!--nickname 읽어오기-->
-                <p><span id="one_liner"></span></p> <!--한줄소개-->
+                <p><span id="oneLiner"></span></p> <!--한줄소개-->
             </div>
         </section>
         <section class="sc-dcgwPl kPCmWH">

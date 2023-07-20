@@ -2,10 +2,10 @@ package com.sparta.community.entity;
 
 import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.dto.UserRequestDto;
+import com.sparta.community.dto.UserUpdateDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.context.annotation.Profile;
 
 // 사용자 정보를 담은 엔티티
 
@@ -25,21 +25,21 @@ public class User {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
-    // 게시글 작성 시 보일 닉네임 (부리)
-    @Column(nullable = false, unique = true)
-    private String nickname;
     // 한줄 소개
     @Column
-    private String one_liner;
+    private String oneLiner;
+    // 이미지
+    @Column
+    private String ImgUrl;
+
 
     public User(SignupRequestDto signupRequestDto, String password){
         this.username = signupRequestDto.getUsername();
         this.password = password;
 
         this.email = signupRequestDto.getEmail();
-        this.nickname = signupRequestDto.getNickname();
-
-        this.one_liner = "자기소개를 입력해주세요.";
+        this.oneLiner = "자기소개를 입력해주세요.";
+        this.ImgUrl = "";
     }
 
     // User 받기?
@@ -47,18 +47,30 @@ public class User {
         this.username = userRequestDto.getUsername();
 
         this.email = userRequestDto.getEmail();
-        this.nickname = userRequestDto.getNickname();
 
-        this.one_liner = "자기소개를 입력해주세요.";
+        this.oneLiner = "자기소개를 입력해주세요.";
+
+        this.ImgUrl = "";
     }
 
-    // 수정
+
+    // 회원정보 수정
     public void update(UserRequestDto requestDto) {
         // id를 어떻게 해야하나
         this.username = requestDto.getUsername();
         this.email = requestDto.getEmail(); // 이메일 수정...??
-        this.one_liner = requestDto.getOne_liner();
+        this.oneLiner = requestDto.getOneLiner();
+        this.ImgUrl = requestDto.getImgUrl();
+
     }
+
+    public User(UserUpdateDto userupdateDto) {
+        this.username = userupdateDto.getUsername();
+        this.oneLiner = userupdateDto.getOneLiner();
+        this.ImgUrl = userupdateDto.getImgUrl();
+    }
+
+
 
 }
 

@@ -2,6 +2,7 @@ package com.sparta.community.controller;
 
 import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.dto.UserInfoDto;
+import com.sparta.community.dto.UserUpdateDto;
 import com.sparta.community.security.UserDetailsImpl;
 import com.sparta.community.service.UserService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -64,4 +66,23 @@ public class UserController {
         userService.checkUsername(username);
     }
 
+    // 회원정보 조회
+    // AuthenticationPrincipal로 로그인한 정보 가져오기
+    @GetMapping("/it/profiles/")
+    public String findByUsername (@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+       // UserInfoDto userInfoDto = userService.findByUsername(username);
+        userDetails.getUser();
+        model.addAttribute("user", userDetails.getUser());
+        return "view-user-info";
+
+    }
+
+    // 회원정보 수정
+    // 프로필 창 띄어주는 컨트롤러 호출 redirect:~
+    @PostMapping("/it/profiles/")
+    public String updateUserInfo(@RequestBody UserUpdateDto userUpdateDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return "redirect:/api/it/profiles";
+    }
+
 }
+

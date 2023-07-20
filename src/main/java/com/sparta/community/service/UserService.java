@@ -1,11 +1,15 @@
 package com.sparta.community.service;
 
 import com.sparta.community.dto.SignupRequestDto;
+import com.sparta.community.dto.UserInfoDto;
+import com.sparta.community.dto.UserUpdateDto;
 import com.sparta.community.entity.User;
 import com.sparta.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -44,4 +48,17 @@ public class UserService {
             throw new IllegalArgumentException("이미 회원가입 된 이메일 입니다.");
         }
     }
+
+
+    // 회원정보 검색
+
+
+
+    // 회원정보 수정
+    @Transactional
+    public void updateUser(UserUpdateDto userupdateDto) {
+        User updateUser = new User(userupdateDto);
+
+    }
+
 }
