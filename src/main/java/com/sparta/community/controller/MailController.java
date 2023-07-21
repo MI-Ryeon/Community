@@ -1,5 +1,6 @@
 package com.sparta.community.controller;
 
+import com.sparta.community.dto.AuthcodeDto;
 import com.sparta.community.service.MailService;
 import com.sparta.community.service.UserService;
 import jakarta.mail.MessagingException;
@@ -32,7 +33,7 @@ public class MailController {
 
     // 메일 인증코드 확인
     @PostMapping("/email/confirm-authcode")
-    public void confirmAuthcode(@RequestBody String input) {
-        mailService.confirmAuthcode(input);
+    public void confirmAuthcode(@RequestBody AuthcodeDto authcodeDto) {
+        mailService.confirmAuthcode(authcodeDto);
     }
 }

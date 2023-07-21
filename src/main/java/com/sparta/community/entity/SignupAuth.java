@@ -1,8 +1,6 @@
 package com.sparta.community.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,22 +9,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "signupauth")
 public class SignupAuth {
     @Id
-    String email;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
-    private int authStatus;
+    private String email;
 
     public SignupAuth(String email) {
         this.email = email;
-        this.authStatus = 0;
-    }
-
-    public void changeStatusOK(){
-        this.authStatus = 1;
-    }
-    public void changeStatusNO(){
-        this.authStatus = 0;
     }
 }

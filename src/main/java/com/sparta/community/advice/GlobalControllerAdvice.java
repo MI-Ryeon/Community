@@ -16,10 +16,4 @@ public class GlobalControllerAdvice {
         ApiResult apiResponseDto = new ApiResult(ex.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(apiResponseDto, HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<ApiResult> handleException(IllegalArgumentException ex) {
-        ApiResult apiResponseDto = new ApiResult(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(apiResponseDto, HttpStatus.BAD_REQUEST);
-    }
 }

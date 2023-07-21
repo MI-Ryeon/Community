@@ -1,5 +1,6 @@
 package com.sparta.community.service;
 
+import com.sparta.community.dto.AuthcodeDto;
 import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.entity.SignupAuth;
 import com.sparta.community.entity.User;
@@ -9,11 +10,13 @@ import com.sparta.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -39,6 +42,8 @@ public class UserService {
             }
             role = UserRoleEnum.ADMIN;
         }
+         signupAuthRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new IllegalArgumentException("이메일 인증을 해주세요."));
+
 
         // 사용자 DB에 등록
         userRepository.save(new User(requestDto, password, role));
@@ -57,15 +62,8 @@ public class UserService {
         Optional<User> checkEmail = userRepository.findByEmail(email);
 
         // 회원가입 이메일 인증번호 검증여부 확인
-        Optional<SignupAuth> checkSignupAuth = signupAuthRepository.findByEmail(email);
-
-        // 회원가입 이메일 인증번호 검증여부 확인
         if (checkEmail.isPresent()) {
             throw new IllegalArgumentException("이미 회원가입 된 이메일 입니다.");
-        }
-        //이메일 인증 정보가 Table에 없거나, 상태코드가 1(OK)이 아닌경우
-        if (checkSignupAuth.isEmpty() || checkSignupAuth.get().getAuthStatus() != 1) {
-            throw new IllegalArgumentException("이메일 인증이 수행되지 않았습니다. 이메일 인증을 완료해주세요.");
         }
     }
 }

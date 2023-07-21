@@ -44,6 +44,7 @@ public class UserController {
             return "redirect:/api/signup-page";
         }
 
+
         userService.signup(requestDto);
 
         return "redirect:/api/login-page";

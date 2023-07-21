@@ -137,13 +137,15 @@ function confirm_email() {
 function confirm_authcode() {
 
     const input = document.getElementById("confirm_email_code").value;
+    const email = document.getElementById("email").value;
 
     // ***** 중복 검사를 통과하면 메일을 보낸다
     $.ajax({
         type: 'POST',
         url: '/api/email/confirm-authcode',
         contentType: "application/json",
-        data: input
+        data : JSON.stringify({email:email, authCode: input})
+
     }).done(function (data, textStatus, xhr) {
         if (data !== '') {
             alert('유효한 코드가 아닙니다');
