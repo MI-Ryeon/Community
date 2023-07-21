@@ -23,7 +23,7 @@ public class UserRequestDto {
 
     private String oneLine;
 
-// 권한
-     private boolean admin = false;
-     private String adminToken = "";
+    // 권한
+    private boolean admin = false;
+    private String adminToken = "";
 }

@@ -23,6 +23,7 @@ public class AdminNoticeController {
 
     private final NoticeService noticeService;
 
+    // 공지 작성
     @PostMapping("/notice")
     public ResponseEntity<ApiResponseDto> createNotice(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PostRequestDto requestDto) {
         NoticeResponseDto result = noticeService.createNotice(requestDto, userDetails.getUser());

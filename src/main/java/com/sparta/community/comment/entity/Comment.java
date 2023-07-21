@@ -1,8 +1,8 @@
 package com.sparta.community.comment.entity;
 
 import com.sparta.community.admin.entity.Notice;
-import com.sparta.community.post.entity.Post;
 import com.sparta.community.common.dto.TimeStamped;
+import com.sparta.community.post.entity.Post;
 import com.sparta.community.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;

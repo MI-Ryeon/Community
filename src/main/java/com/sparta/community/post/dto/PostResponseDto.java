@@ -1,7 +1,6 @@
 package com.sparta.community.post.dto;
 
 import com.sparta.community.comment.dto.CommentResponseDto;
-import com.sparta.community.common.dto.ApiResponseDto;
 import com.sparta.community.post.entity.Post;
 import lombok.Getter;
 import lombok.Setter;

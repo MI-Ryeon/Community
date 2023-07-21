@@ -20,6 +20,7 @@ public class CommentNoticeController {
 
     private final CommentNoticeService commentNoticeService;
 
+    // 댓글 작성
     @PostMapping("/comments")
     public ResponseEntity<CommentResponseDto> createNoticeComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CommentRequestDto requestDto) {
         CommentResponseDto result = commentNoticeService.createNoticeComment(requestDto, userDetails.getUser());
@@ -27,6 +28,7 @@ public class CommentNoticeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    // 댓글 수정
     @PutMapping("/comments/{id}")
     public ResponseEntity<ApiResponseDto> updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
         try {

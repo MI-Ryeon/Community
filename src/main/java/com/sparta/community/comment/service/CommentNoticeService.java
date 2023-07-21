@@ -5,7 +5,6 @@ import com.sparta.community.admin.service.NoticeService;
 import com.sparta.community.comment.dto.CommentRequestDto;
 import com.sparta.community.comment.dto.CommentResponseDto;
 import com.sparta.community.comment.entity.Comment;
-import com.sparta.community.comment.entity.CommentLike;
 import com.sparta.community.comment.repository.CommentNoticeRepository;
 import com.sparta.community.user.entity.User;
 import com.sparta.community.user.entity.UserRoleEnum;

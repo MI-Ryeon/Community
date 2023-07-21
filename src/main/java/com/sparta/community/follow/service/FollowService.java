@@ -1,14 +1,14 @@
 package com.sparta.community.follow.service;
 
+import com.sparta.community.common.security.UserDetailsImpl;
 import com.sparta.community.follow.dto.FollowRequestDto;
 import com.sparta.community.follow.entity.Follow;
 import com.sparta.community.follow.repository.FollowRepository;
 import com.sparta.community.post.dto.PostResponseDto;
 import com.sparta.community.post.entity.Post;
-import com.sparta.community.user.entity.User;
 import com.sparta.community.post.repository.PostRepository;
+import com.sparta.community.user.entity.User;
 import com.sparta.community.user.repository.UserRepository;
-import com.sparta.community.common.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

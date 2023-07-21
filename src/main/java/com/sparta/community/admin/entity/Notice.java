@@ -1,18 +1,20 @@
 package com.sparta.community.admin.entity;
 
 import com.sparta.community.comment.entity.Comment;
-import com.sparta.community.post.dto.PostRequestDto;
 import com.sparta.community.common.dto.TimeStamped;
+import com.sparta.community.post.dto.PostRequestDto;
 import com.sparta.community.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "notice")
 public class Notice extends TimeStamped {
@@ -36,17 +38,5 @@ public class Notice extends TimeStamped {
     public Notice(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

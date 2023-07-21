@@ -3,7 +3,6 @@ package com.sparta.community.admin.controller;
 import com.sparta.community.common.dto.ApiResponseDto;
 import com.sparta.community.common.security.UserDetailsImpl;
 import com.sparta.community.post.dto.PostRequestDto;
-import com.sparta.community.post.dto.PostResponseDto;
 import com.sparta.community.post.service.PostService;
 import com.sparta.community.user.entity.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,14 @@ public class AdminPostController {
 
     private final PostService postService;
 
+    // 등록된 게시글 수정
     @PutMapping("/posts/{id}")
     public ResponseEntity<ApiResponseDto> updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody PostRequestDto requestDto) {
         postService.updatePost(id, requestDto, userDetails.getUser());
         return ResponseEntity.ok().body(new ApiResponseDto("게시글 수정 완료", HttpStatus.OK.value()));
     }
 
+    // 등록된 게시글 삭제
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<ApiResponseDto> deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         postService.deletePost(id, userDetails.getUser());

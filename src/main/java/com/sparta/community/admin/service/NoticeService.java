@@ -4,7 +4,6 @@ import com.sparta.community.admin.entity.Notice;
 import com.sparta.community.admin.repository.NoticeRepository;
 import com.sparta.community.post.dto.NoticeResponseDto;
 import com.sparta.community.post.dto.PostRequestDto;
-import com.sparta.community.post.entity.Post;
 import com.sparta.community.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
+    // 공지 작성
     public NoticeResponseDto createNotice(PostRequestDto requestDto, User user) {
         Notice notice = new Notice(requestDto);
         notice.setUser(user);
@@ -24,6 +24,7 @@ public class NoticeService {
         return new NoticeResponseDto(notice);
     }
 
+    // id 값으로 공지를 조회하는 메소드
     public Notice findNotice(Long id) {
         return noticeRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("선택한 게시글은 존재하지 않습니다.")

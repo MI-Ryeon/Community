@@ -1,6 +1,5 @@
 package com.sparta.community.post.entity;
 
-import com.sparta.community.post.entity.Post;
 import com.sparta.community.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;

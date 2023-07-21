@@ -1,10 +1,10 @@
 package com.sparta.community.follow.controller;
 
 import com.sparta.community.common.dto.ApiResponseDto;
+import com.sparta.community.common.security.UserDetailsImpl;
 import com.sparta.community.follow.dto.FollowRequestDto;
 import com.sparta.community.follow.service.FollowService;
 import com.sparta.community.post.dto.PostResponseDto;
-import com.sparta.community.common.security.UserDetailsImpl;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

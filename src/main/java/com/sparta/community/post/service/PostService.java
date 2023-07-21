@@ -1,5 +1,6 @@
 package com.sparta.community.post.service;
 
+import com.sparta.community.common.security.UserDetailsImpl;
 import com.sparta.community.post.dto.PostListResponseDto;
 import com.sparta.community.post.dto.PostRequestDto;
 import com.sparta.community.post.dto.PostResponseDto;
@@ -9,7 +10,6 @@ import com.sparta.community.post.repository.PostLikeRepository;
 import com.sparta.community.post.repository.PostRepository;
 import com.sparta.community.user.entity.User;
 import com.sparta.community.user.entity.UserRoleEnum;
-import com.sparta.community.common.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

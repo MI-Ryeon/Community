@@ -53,7 +53,6 @@ public class User {
 
     // 수정
     public void update(UserRequestDto requestDto) {
-        // id를 어떻게 해야하나
         this.username = requestDto.getUsername();
         this.email = requestDto.getEmail(); // 이메일 수정...??
         this.oneLine = requestDto.getOneLine();
