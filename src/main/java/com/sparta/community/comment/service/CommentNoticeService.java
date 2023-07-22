@@ -1,7 +1,7 @@
 package com.sparta.community.comment.service;
 
 import com.sparta.community.admin.entity.Notice;
-import com.sparta.community.admin.service.NoticeService;
+import com.sparta.community.admin.service.AdminNoticeService;
 import com.sparta.community.comment.dto.CommentRequestDto;
 import com.sparta.community.comment.dto.CommentResponseDto;
 import com.sparta.community.comment.entity.Comment;
@@ -18,11 +18,11 @@ import java.util.concurrent.RejectedExecutionException;
 @RequiredArgsConstructor
 public class CommentNoticeService {
 
-    private final NoticeService noticeService;
+    private final AdminNoticeService adminNoticeService;
     private final CommentNoticeRepository commentPostRepository;
 
     public CommentResponseDto createNoticeComment(CommentRequestDto requestDto, User user) {
-        Notice notice = noticeService.findNotice(requestDto.getPostId());
+        Notice notice = adminNoticeService.findNotice(requestDto.getPostId());
         Comment comment = new Comment(requestDto.getComment());
         comment.setUser(user);
         comment.setNotice(notice);

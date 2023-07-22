@@ -2,7 +2,6 @@ package com.sparta.community.post.dto;
 
 import com.sparta.community.admin.entity.Notice;
 import com.sparta.community.comment.dto.CommentResponseDto;
-import com.sparta.community.common.dto.ApiResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class NoticeResponseDto extends ApiResponseDto {
+public class NoticeResponseDto {
     private Long id;
     private String username;
     private String title;
