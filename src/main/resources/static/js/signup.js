@@ -25,7 +25,7 @@ function confirm_username() {
 
     $.ajax({
         type: 'POST',
-        url: '/api/user/signup/confirm-username/' + encodeURIComponent(username),
+        url: '/it/users/signup/confirm-username/' + encodeURIComponent(username),
         contentType: "application/json",
         // data: JSON.stringify(username)
     }).done(function (data, textStatus, xhr) {
@@ -67,6 +67,20 @@ function check_password() { // 비밀번호 일치 및 정규식 체크
     }
 }
 
+function onclickAdmin() {
+    // Get the checkbox
+    var checkBox = document.getElementById("admin-check");
+    // Get the output text
+    var box = document.getElementById("admin-token");
+
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true){
+        box.style.display = "block";
+    } else {
+        box.style.display = "none";
+    }
+}
+
 function check_email() { // 이메일 정규식 체크
     var email = document.getElementById('email').value;
 
@@ -96,7 +110,7 @@ function confirm_email() {
 
     $.ajax({
         type: 'POST',
-        url: '/api/user/signup/confirm-email/' + encodeURIComponent(email),
+        url: '/it/users/signup/confirm-email/' + encodeURIComponent(email),
         contentType: "application/json",
         // data: JSON.stringify(email)
     }).done(function (data, textStatus, xhr) {
@@ -106,7 +120,7 @@ function confirm_email() {
         } else {
             $.ajax({
                 type: 'POST',
-                url: '/api/email/send-email',
+                url: '/it/users/email/send-email',
                 contentType: "application/json",
                 data: JSON.stringify(email)
             }).done(function (data, textStatus, xhr) {
@@ -137,13 +151,14 @@ function confirm_email() {
 function confirm_authcode() {
 
     const input = document.getElementById("confirm_email_code").value;
+    const email = document.getElementById("email").value;
 
     // ***** 중복 검사를 통과하면 메일을 보낸다
     $.ajax({
         type: 'POST',
-        url: '/api/email/confirm-authcode',
+        url: '/it/users/email/confirm-authcode',
         contentType: "application/json",
-        data: input
+        data : JSON.stringify({email:email, authCode: input})
     }).done(function (data, textStatus, xhr) {
         if (data !== '') {
             alert('유효한 코드가 아닙니다');

@@ -26,7 +26,7 @@
 
     <button id="login-id-submit" onclick="onLogin()">로그인</button>
 
-    <button id="login-id-btn" onclick="location.href='/api/user/signup-page'">
+    <button id="login-id-btn" onclick="location.href='/it/users/signup-page'">
       회원 가입하기
     </button>
   </div>
@@ -35,7 +35,7 @@
 </body>
 <script>
   $(document).ready(function () {
-// 토큰 삭제
+    // 토큰 삭제
     Cookies.remove('Authorization', {path: '/'});
   });
   const host = 'http://' + window.location.host;
@@ -50,19 +50,28 @@
     let password = $('#password').val();
     $.ajax({
       type: "POST",
-      url: `/api/user/login`,
+      url: `/it/users/login`,
       contentType: "application/json",
       data: JSON.stringify({username: username, password: password}),
     })
             .done(function (res, status, xhr) {
+              // const token = xhr.getResponseHeader('Authorization');
+              //
+              // Cookies.set('Authorization', token, {path: '/'})
+              //
+              // $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+              //   jqXHR.setRequestHeader('Authorization', token);
+              // });
+
               window.location.href = host;
             })
-            .fail(function (xhr, textStatus, errorThrown) {
-              console.log('statusCode: ' + xhr.status);
-              window.location.href = host + '/api/user/login-page?error'
+            .fail(function (jqXHR, textStatus) {
+              alert("Login Fail");
+              window.location.href = host + '/it/users/login-page?error'
+            // .fail(function (xhr, textStatus, errorThrown) {
+            //   console.log('statusCode: ' + xhr.status);
+            //   window.location.href = host + '/api/user/login-page?error'
             });
   }
-
-
 </script>
 </html>
