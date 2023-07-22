@@ -1,5 +1,6 @@
 package com.sparta.community.entity;
 
+import com.sparta.community.dto.ProfileRequestDto;
 import com.sparta.community.dto.SignupRequestDto;
 import com.sparta.community.dto.UserRequestDto;
 import com.sparta.community.dto.UserUpdateDto;
@@ -64,12 +65,9 @@ public class User {
 
 
     // 회원정보 수정
-    public void update(UserRequestDto requestDto) {
-        // id를 어떻게 해야하나
+    public void update(ProfileRequestDto requestDto) {
         this.username = requestDto.getUsername();
-        this.password = requestDto.getPassword();
         this.oneLiner = requestDto.getOneLiner();
-        this.ImgUrl = requestDto.getImgUrl();
 
     }
 

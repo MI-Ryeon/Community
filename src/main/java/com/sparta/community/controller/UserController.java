@@ -1,12 +1,12 @@
 package com.sparta.community.controller;
 
-import com.sparta.community.dto.ProfileRequestDto;
-import com.sparta.community.dto.SignupRequestDto;
-import com.sparta.community.dto.UserInfoDto;
+import com.sparta.community.dto.*;
 import com.sparta.community.security.UserDetailsImpl;
 import com.sparta.community.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,20 +70,22 @@ public class UserController {
     }
 
 
-    // 프로필 수정하기 전 비밀번호 체크 (구현)
-
-    // 회원정보 조회
+    // 프로필 보기
     @GetMapping("/it/user/profile")
-    public String getProfile (@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-        model.addAttribute("user", userDetails.getUser());
-        return "{프로필 html url}";
+    public ProfileResponseDto getProfile (@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.getProfile(userDetails.getUser().getId());
     }
 
     // 회원정보 수정
     // 프로필 창 띄어주는 컨트롤러 호출 redirect:~
     @PutMapping("/it/user/profiles/")
-    public String updateUserInfo(@RequestBody ProfileRequestDto profileRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return "redirect:/api/it/user/profiles";
+    public ResponseEntity<ApiResult> updateProfile(@RequestBody ProfileRequestDto profileRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try{
+            userService.updateProfile(profileRequestDto, userDetails.getUser());
+            return ResponseEntity.ok().body(new ApiResult("프로필 수정 성공", HttpStatus.OK.value()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ApiResult("작성자만 수정 가능합니다", HttpStatus.BAD_REQUEST.value()));
+        }
     }
 
 

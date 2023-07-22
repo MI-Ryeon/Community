@@ -1,8 +1,6 @@
 package com.sparta.community.service;
 
-import com.sparta.community.dto.SignupRequestDto;
-import com.sparta.community.dto.UserInfoDto;
-import com.sparta.community.dto.UserUpdateDto;
+import com.sparta.community.dto.*;
 import com.sparta.community.entity.User;
 import com.sparta.community.entity.UserRoleEnum;
 import com.sparta.community.repository.UserRepository;
@@ -56,14 +54,24 @@ public class UserService {
     }
 
 
-    // 회원정보 검색
+    // 프로필 보기
+    public ProfileResponseDto getProfile(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("사용자를 찾을 수 없습니다.")
+        );
+        return new ProfileResponseDto(user);
+    }
 
 
-
-    // 회원정보 수정
+    // 회원정보 수정 (username,한줄소개)
     @Transactional
-    public void updateUser(UserUpdateDto userupdateDto) {
-        User updateUser = new User(userupdateDto);
+    public void updateProfile(ProfileRequestDto requestDto, User user) {
+        User userItem = userRepository.findById(user.getId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다.")
+        );
+
+        userItem.setUsername(requestDto.getUsername());
+        userItem.setOneLiner(requestDto.getOneLiner());
 
     }
 

@@ -7,7 +7,5 @@ import lombok.Setter;
 @Setter
 public class ProfileRequestDto {
     private String username;
-    private String password;
-    private String imageUrl;
     private String oneLiner;
 }
