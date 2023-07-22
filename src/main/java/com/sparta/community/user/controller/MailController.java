@@ -1,8 +1,8 @@
-package com.sparta.community.controller;
+package com.sparta.community.user.controller;
 
-import com.sparta.community.dto.AuthcodeDto;
-import com.sparta.community.service.MailService;
-import com.sparta.community.service.UserService;
+import com.sparta.community.user.dto.AuthcodeDto;
+import com.sparta.community.user.service.MailService;
+import com.sparta.community.user.service.UserService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

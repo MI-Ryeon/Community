@@ -1,6 +1,6 @@
-package com.sparta.community.repository;
+package com.sparta.community.user.repository;
 
-import com.sparta.community.entity.SignupAuth;
+import com.sparta.community.user.entity.SignupAuth;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

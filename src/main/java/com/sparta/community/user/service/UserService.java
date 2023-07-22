@@ -1,12 +1,10 @@
-package com.sparta.community.service;
+package com.sparta.community.user.service;
 
-import com.sparta.community.dto.AuthcodeDto;
-import com.sparta.community.dto.SignupRequestDto;
-import com.sparta.community.entity.SignupAuth;
-import com.sparta.community.entity.User;
-import com.sparta.community.entity.UserRoleEnum;
-import com.sparta.community.repository.SignupAuthRepository;
-import com.sparta.community.repository.UserRepository;
+import com.sparta.community.user.repository.SignupAuthRepository;
+import com.sparta.community.user.dto.SignupRequestDto;
+import com.sparta.community.user.entity.User;
+import com.sparta.community.user.entity.UserRoleEnum;
+import com.sparta.community.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,7 +40,7 @@ public class UserService {
             }
             role = UserRoleEnum.ADMIN;
         }
-         signupAuthRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new IllegalArgumentException("이메일 인증을 해주세요."));
+        signupAuthRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new IllegalArgumentException("이메일 인증을 해주세요."));
 
 
         // 사용자 DB에 등록

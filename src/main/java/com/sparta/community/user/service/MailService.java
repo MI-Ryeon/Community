@@ -1,8 +1,8 @@
-package com.sparta.community.service;
+package com.sparta.community.user.service;
 
-import com.sparta.community.dto.AuthcodeDto;
-import com.sparta.community.entity.SignupAuth;
-import com.sparta.community.repository.SignupAuthRepository;
+import com.sparta.community.user.dto.AuthcodeDto;
+import com.sparta.community.user.entity.SignupAuth;
+import com.sparta.community.user.repository.SignupAuthRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -84,7 +84,7 @@ public class MailService {
     // 3. findbyemail 값이 없을 때, 회원가입을 못하게 에러메세지를 보낸다.
     // 4. else문에 완료 코드 작성
     public void confirmAuthcode(AuthcodeDto authcodeDto) {
-        if(!authcode.equals(authcodeDto.getAuthCode())) {
+        if (!authcode.equals(authcodeDto.getAuthCode())) {
             throw new IllegalArgumentException("인증코드가 일치하지 않습니다.");
         }
         signupAuthRepository.save(new SignupAuth(authcodeDto.getEmail()));

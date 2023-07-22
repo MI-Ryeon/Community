@@ -1,4 +1,4 @@
-package com.sparta.community.entity;
+package com.sparta.community.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
