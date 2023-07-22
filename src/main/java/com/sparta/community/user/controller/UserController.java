@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j // 로깅에 사용
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/it/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -41,13 +41,13 @@ public class UserController {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
             }
-            return "redirect:/api/signup-page";
+            return "redirect:/it/users/signup-page";
         }
 
 
         userService.signup(requestDto);
 
-        return "redirect:/api/login-page";
+        return "redirect:/it/users/login-page";
     }
 
     // 회원 관련 정보 받기

@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/it/users")
 public class MailController {
 
     private final MailService mailService;
