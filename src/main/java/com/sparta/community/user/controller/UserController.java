@@ -1,9 +1,14 @@
 package com.sparta.community.user.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sparta.community.common.jwt.JwtUtil;
 import com.sparta.community.common.security.UserDetailsImpl;
 import com.sparta.community.user.dto.SignupRequestDto;
 import com.sparta.community.user.dto.UserInfoDto;
+import com.sparta.community.user.service.KakaoService;
 import com.sparta.community.user.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +27,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final KakaoService kakaoService;
 
     @GetMapping("/login-page")
     public String loginPage() {
@@ -66,5 +72,19 @@ public class UserController {
     public void checkUsername(@PathVariable("username") String username) {
         userService.checkUsername(username);
     }
+
+    @GetMapping("/users/login/kakao/callback")
+    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+        String token = kakaoService.kakaoLogin(code);
+
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        return "redirect:/";
+
+    }
+
+
 
 }
