@@ -25,7 +25,7 @@ function confirm_username() {
 
     $.ajax({
         type: 'POST',
-        url: '/api/signup/confirm-username/' + encodeURIComponent(username),
+        url: '/it/users/signup/confirm-username/' + encodeURIComponent(username),
         contentType: "application/json",
         // data: JSON.stringify(username)
     }).done(function (data, textStatus, xhr) {
@@ -110,7 +110,7 @@ function confirm_email() {
 
     $.ajax({
         type: 'POST',
-        url: '/api/signup/confirm-email/' + encodeURIComponent(email),
+        url: '/it/users/signup/confirm-email/' + encodeURIComponent(email),
         contentType: "application/json",
         // data: JSON.stringify(email)
     }).done(function (data, textStatus, xhr) {
@@ -120,7 +120,7 @@ function confirm_email() {
         } else {
             $.ajax({
                 type: 'POST',
-                url: '/api/email/send-email',
+                url: '/it/users/email/send-email',
                 contentType: "application/json",
                 data: JSON.stringify(email)
             }).done(function (data, textStatus, xhr) {
@@ -156,7 +156,7 @@ function confirm_authcode() {
     // ***** 중복 검사를 통과하면 메일을 보낸다
     $.ajax({
         type: 'POST',
-        url: '/api/email/confirm-authcode',
+        url: '/it/users/email/confirm-authcode',
         contentType: "application/json",
         data : JSON.stringify({email:email, authCode: input})
 

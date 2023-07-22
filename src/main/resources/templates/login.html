@@ -26,7 +26,7 @@
 
     <button id="login-id-submit" onclick="onLogin()">로그인</button>
 
-    <button id="login-id-btn" onclick="location.href='/api/signup-page'">
+    <button id="login-id-btn" onclick="location.href='/it/users/signup-page'">
       회원 가입하기
     </button>
   </div>
@@ -54,7 +54,7 @@
 
     $.ajax({
       type: "POST",
-      url: `/api/login`,
+      url: `/it/users/login`,
       contentType: "application/json",
       data: JSON.stringify({username: username, password: password}),
     })
@@ -71,7 +71,7 @@
             })
             .fail(function (jqXHR, textStatus) {
               alert("Login Fail");
-              window.location.href = host + '/api/login-page?error'
+              window.location.href = host + '/it/users/login-page?error'
             });
   }
 </script>

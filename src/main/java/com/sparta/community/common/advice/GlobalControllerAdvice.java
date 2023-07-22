@@ -20,12 +20,12 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(apiResponseDto, HttpStatus.BAD_REQUEST);
     }
 
-    // 프로젝트 전반적인 IllegalArgumentException 의 예외 처리
-    @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<ApiResponseDto> handleException(IllegalArgumentException ex) {
-        ApiResponseDto apiResponseDto = new ApiResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(apiResponseDto, HttpStatus.BAD_REQUEST);
-    }
+    // 프로젝트 전반적인 IllegalArgumentException 의 예외 처리(포스트맨에서 실습할 때 활성화)
+//    @ExceptionHandler({IllegalArgumentException.class})
+//    public ResponseEntity<ApiResponseDto> handleException(IllegalArgumentException ex) {
+//        ApiResponseDto apiResponseDto = new ApiResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+//        return new ResponseEntity<>(apiResponseDto, HttpStatus.BAD_REQUEST);
+//    }
 
     // USER 가 ADMIN PAGE 에 접속하려 할 때 권한 없음을 알려주는 예외 처리
     @ExceptionHandler({AccessDeniedException.class})
