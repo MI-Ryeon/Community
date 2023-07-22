@@ -72,13 +72,15 @@ public class UserController {
 
     // 프로필 보기
     @GetMapping("/it/user/profile")
+    @ResponseBody
     public ProfileResponseDto getProfile (@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.getProfile(userDetails.getUser().getId());
     }
 
     // 회원정보 수정
     // 프로필 창 띄어주는 컨트롤러 호출 redirect:~
-    @PutMapping("/it/user/profiles/")
+    @PutMapping("/it/user/profiles")
+    @ResponseBody
     public ResponseEntity<ApiResult> updateProfile(@RequestBody ProfileRequestDto profileRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try{
             userService.updateProfile(profileRequestDto, userDetails.getUser());
@@ -90,6 +92,7 @@ public class UserController {
 
 
     @GetMapping("/user/mypage")
+    @ResponseBody
     public String mypage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model){
         String email = userDetails.getUser().getEmail();
         String username = userDetails.getUsername();

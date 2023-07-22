@@ -57,7 +57,7 @@
 
                         // user 없는 상태면 로그인으로 보내버리기
                         if (!username) {
-                            window.location.href = '/api/login-page';
+                            window.location.href = '/api/user/login-page';
                             return;
                         }
                         console.log(res);
@@ -73,7 +73,7 @@
                     });
 
             } else {
-                window.location.href = host + '/api/login-page';
+                window.location.href = host + '/api/user/login-page';
                 return;
             }
         })

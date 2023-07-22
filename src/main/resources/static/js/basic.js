@@ -9,20 +9,20 @@ $(document).ready(function () {
             jqXHR.setRequestHeader('Authorization', auth);
         });
     } else {
-        window.location.href = host + '/api/login-page';
+        window.location.href = host + '/api/user/login-page';
         return;
     }
 
     $.ajax({
         type: 'GET',
-        url: `/api/user-info`,
+        url: `/api/user/user-info`,
         contentType: 'application/json',
     })
         .done(function (res, status, xhr) {
             const username = res.username;
 
             if (!username) {
-                window.location.href = '/api/login-page';
+                window.location.href = '/api/user/login-page';
                 return;
             }
 
@@ -67,7 +67,7 @@ $(document).ready(function () {
 function logout() {
     // 토큰 삭제
     Cookies.remove('Authorization', {path: '/'});
-    window.location.href = host + '/api/login-page';
+    window.location.href = host + '/api/user/login-page';
 }
 
 function getToken() {
