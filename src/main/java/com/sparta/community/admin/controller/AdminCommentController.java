@@ -24,8 +24,8 @@ public class AdminCommentController {
     // 등록된 댓글 수정
     @PutMapping("/comments/{id}")
     public ResponseEntity<ApiResponseDto> updateNoticeComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
-        CommentResponseDto result = commentNoticeService.updateNoticeComment(id, requestDto, userDetails.getUser());
-        return ResponseEntity.ok().body(result);
+        commentNoticeService.updateNoticeComment(id, requestDto, userDetails.getUser());
+        return ResponseEntity.ok().body(new ApiResponseDto("댓글 수정 성공", HttpStatus.OK.value()));
     }
 
     // 등록된 댓글 삭제

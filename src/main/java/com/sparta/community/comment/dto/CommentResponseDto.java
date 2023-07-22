@@ -1,7 +1,6 @@
 package com.sparta.community.comment.dto;
 
 import com.sparta.community.comment.entity.Comment;
-import com.sparta.community.common.dto.ApiResponseDto;
 import com.sparta.community.user.entity.UserRoleEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CommentResponseDto extends ApiResponseDto {
+public class CommentResponseDto {
     private String username;
     private UserRoleEnum role;
     private String comment;

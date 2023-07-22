@@ -5,7 +5,7 @@ import com.sparta.community.admin.dto.AdminUserResponseDto;
 import com.sparta.community.admin.dto.AdminUserRoleRequestDto;
 import com.sparta.community.post.entity.Post;
 import com.sparta.community.post.repository.PostRepository;
-import com.sparta.community.user.dto.UserResponseDto;
+import com.sparta.community.user.dto.UserRequestDto;
 import com.sparta.community.user.entity.User;
 import com.sparta.community.user.entity.UserRoleEnum;
 import com.sparta.community.user.repository.UserRepository;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdminService {
+public class AdminUserService {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -38,7 +38,7 @@ public class AdminService {
     }
 
     // 회원 정보 수정 -> 기존 프로필 수정과 합쳐질 예정
-    public void updateUserProfile(Long id, UserResponseDto responseDto) {
+    public void updateUserProfile(Long id, UserRequestDto requestDto) {
     }
 
     // 회원 권한 변경

@@ -1,5 +1,6 @@
 package com.sparta.community.admin.service;
 
+import com.sparta.community.admin.dto.NoticeListResponseDto;
 import com.sparta.community.admin.entity.Notice;
 import com.sparta.community.admin.repository.NoticeRepository;
 import com.sparta.community.post.dto.NoticeResponseDto;
@@ -8,9 +9,12 @@ import com.sparta.community.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
-public class NoticeService {
+public class AdminNoticeService {
 
     private final NoticeRepository noticeRepository;
 
@@ -20,6 +24,22 @@ public class NoticeService {
         notice.setUser(user);
 
         noticeRepository.save(notice);
+
+        return new NoticeResponseDto(notice);
+    }
+
+    // 공지 전체 조회
+    public NoticeListResponseDto getNotice() {
+        List<NoticeResponseDto> noticeList = noticeRepository.findAllByOrderByModifiedAtDesc().stream()
+                .map(NoticeResponseDto::new)
+                .collect(Collectors.toList());
+
+        return new NoticeListResponseDto(noticeList);
+    }
+
+    // 공지 개별 조회
+    public NoticeResponseDto getPostById(Long id) {
+        Notice notice = findNotice(id);
 
         return new NoticeResponseDto(notice);
     }

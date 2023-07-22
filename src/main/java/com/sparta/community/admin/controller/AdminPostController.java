@@ -2,7 +2,9 @@ package com.sparta.community.admin.controller;
 
 import com.sparta.community.common.dto.ApiResponseDto;
 import com.sparta.community.common.security.UserDetailsImpl;
+import com.sparta.community.post.dto.PostListResponseDto;
 import com.sparta.community.post.dto.PostRequestDto;
+import com.sparta.community.post.dto.PostResponseDto;
 import com.sparta.community.post.service.PostService;
 import com.sparta.community.user.entity.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,20 @@ import org.springframework.web.bind.annotation.*;
 public class AdminPostController {
 
     private final PostService postService;
+
+    // 전체 게시글 조회
+    @GetMapping("/posts")
+    public ResponseEntity<PostListResponseDto> getPosts() {
+        PostListResponseDto result = postService.getPosts();
+        return ResponseEntity.ok().body(result);
+    }
+
+    // 개별 게시글 조회
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<PostResponseDto> getPostById(@PathVariable Long id) {
+        PostResponseDto result = postService.getPostById(id);
+        return ResponseEntity.ok().body(result);
+    }
 
     // 등록된 게시글 수정
     @PutMapping("/posts/{id}")
