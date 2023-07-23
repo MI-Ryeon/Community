@@ -15,12 +15,14 @@ public class UserResponseDto {
     private String username; // 로그인 시 사용할 아이디
     private String email;
     private String oneLiner;     // 한줄 소개
+    private String nickname;
     private String imgUrl;
 
     public UserResponseDto(User user) {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.oneLiner = user.getOneLiner();
+        this.nickname = user.getNickname();
         this.imgUrl = user.getImgUrl();
     }
 }

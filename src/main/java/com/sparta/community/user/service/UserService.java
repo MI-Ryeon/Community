@@ -30,6 +30,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String email = requestDto.getEmail();
         String oneLiner = requestDto.getOneLiner();
+        String nickname = requestDto.getNickname();
 
         // username 중복 확인
         checkUsername(requestDto.getUsername());
@@ -49,7 +50,7 @@ public class UserService {
 
 
         // 사용자 DB에 등록
-        userRepository.save(new User(username, password, email, oneLiner, role));
+        userRepository.save(new User(username, password, email, oneLiner, nickname, role));
     }
 
     // username 중복 확인
@@ -85,7 +86,7 @@ public class UserService {
         User userItem = userRepository.findById(user.getId()).orElseThrow(
                 () -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다.")
         );
-        userItem.setUsername(requestDto.getUsername());
+        userItem.setNickname(requestDto.getNickname());
         userItem.setOneLiner(requestDto.getOneLiner());
     }
 

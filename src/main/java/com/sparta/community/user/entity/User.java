@@ -30,6 +30,9 @@ public class User {
     @Column
     private String imgUrl;
 
+    @Column
+    private String nickname;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
@@ -52,11 +55,12 @@ public class User {
 //        this.imgUrl = "";
 //    }
 
-    public User(String username, String password, String email, String oneLiner, UserRoleEnum role) {
+    public User(String username, String password, String email, String oneLiner, String nickname, UserRoleEnum role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.oneLiner = oneLiner;
+        this.nickname = nickname;
         this.role = role;
     }
 
