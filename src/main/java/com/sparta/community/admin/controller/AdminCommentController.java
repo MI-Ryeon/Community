@@ -1,7 +1,6 @@
 package com.sparta.community.admin.controller;
 
 import com.sparta.community.comment.dto.CommentRequestDto;
-import com.sparta.community.comment.dto.CommentResponseDto;
 import com.sparta.community.comment.service.CommentNoticeService;
 import com.sparta.community.common.dto.ApiResponseDto;
 import com.sparta.community.common.security.UserDetailsImpl;
@@ -31,7 +30,7 @@ public class AdminCommentController {
     // 등록된 댓글 삭제
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<ApiResponseDto> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
-        commentNoticeService.deleteNoticeComment(id, userDetails.getUser());
+        commentNoticeService.deleteComment(id, userDetails.getUser());
         return ResponseEntity.ok().body(new ApiResponseDto("댓글 삭제 성공", HttpStatus.OK.value()));
     }
 }

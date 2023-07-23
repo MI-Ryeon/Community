@@ -1,10 +1,10 @@
 package com.sparta.community.admin.controller;
 
 import com.sparta.community.admin.dto.NoticeListResponseDto;
+import com.sparta.community.admin.dto.NoticeResponseDto;
 import com.sparta.community.admin.service.AdminNoticeService;
 import com.sparta.community.common.dto.ApiResponseDto;
 import com.sparta.community.common.security.UserDetailsImpl;
-import com.sparta.community.post.dto.NoticeResponseDto;
 import com.sparta.community.post.dto.PostRequestDto;
 import com.sparta.community.user.entity.UserRoleEnum;
 import lombok.RequiredArgsConstructor;

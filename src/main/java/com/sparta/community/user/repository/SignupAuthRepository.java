@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface SignupAuthRepository extends JpaRepository<SignupAuth, Long> {
     Optional<SignupAuth> findByEmail(String email);
+
+    Optional<SignupAuth> findById(Long id);
 }

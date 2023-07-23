@@ -32,7 +32,7 @@ public class CommentNoticeService {
         return new CommentResponseDto(savedComment);
     }
 
-    public void deleteNoticeComment(Long id, User user) {
+    public void deleteComment(Long id, User user) {
         Comment comment = commentPostRepository.findById(id).orElseThrow();
 
         // 요청자가 운영자 이거나 댓글 작성자(post.user) 와 요청자(user) 가 같은지 체크

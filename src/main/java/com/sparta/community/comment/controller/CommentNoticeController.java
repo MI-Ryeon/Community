@@ -42,7 +42,7 @@ public class CommentNoticeController {
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<ApiResponseDto> deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         try {
-            commentNoticeService.deleteNoticeComment(id, userDetails.getUser());
+            commentNoticeService.deleteComment(id, userDetails.getUser());
             return ResponseEntity.ok().body(new ApiResponseDto("댓글 삭제 성공", HttpStatus.OK.value()));
         } catch (RejectedExecutionException e) {
             return ResponseEntity.badRequest().body(new ApiResponseDto("작성자만 삭제 할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));

@@ -1,9 +1,9 @@
 package com.sparta.community.admin.service;
 
 import com.sparta.community.admin.dto.NoticeListResponseDto;
+import com.sparta.community.admin.dto.NoticeResponseDto;
 import com.sparta.community.admin.entity.Notice;
 import com.sparta.community.admin.repository.NoticeRepository;
-import com.sparta.community.post.dto.NoticeResponseDto;
 import com.sparta.community.post.dto.PostRequestDto;
 import com.sparta.community.user.entity.User;
 import lombok.RequiredArgsConstructor;

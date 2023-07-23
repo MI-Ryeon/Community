@@ -1,6 +1,5 @@
 package com.sparta.community.user.dto;
 
-import com.sparta.community.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +16,4 @@ public class UserResponseDto {
     private String oneLiner;     // 한줄 소개
     private String nickname;
     private String imgUrl;
-
-    public UserResponseDto(User user) {
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        this.oneLiner = user.getOneLiner();
-        this.nickname = user.getNickname();
-        this.imgUrl = user.getImgUrl();
-    }
 }
