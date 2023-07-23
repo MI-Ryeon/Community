@@ -1,6 +1,9 @@
 package com.sparta.community.user.controller;
 
+import com.sparta.community.common.dto.ApiResponseDto;
 import com.sparta.community.common.security.UserDetailsImpl;
+import com.sparta.community.user.dto.ProfileRequestDto;
+import com.sparta.community.user.dto.ProfileResponseDto;
 import com.sparta.community.user.dto.SignupRequestDto;
 import com.sparta.community.user.dto.UserInfoDto;
 import com.sparta.community.user.service.UserService;
@@ -55,17 +58,12 @@ public class UserController {
     @ResponseBody
     public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         String username = userDetails.getUser().getUsername();
+        String email = userDetails.getUser().getEmail();
+        String oneLiner = userDetails.getUser().getOneLiner();
+        String imgUrl = userDetails.getUser().getImgUrl();
 
-        return new UserInfoDto(username);
+        return new UserInfoDto(username, email, oneLiner, imgUrl);
     }
-
-    // username 중복 체크
-    @PostMapping("/signup/confirm-username/{username}")
-    @ResponseBody
-    public void checkUsername(@PathVariable("username") String username) {
-        userService.checkUsername(username);
-    }
-
 
     // 프로필 보기
     @GetMapping("/profile")
@@ -78,18 +76,17 @@ public class UserController {
     // 프로필 창 띄어주는 컨트롤러 호출 redirect:~
     @PutMapping("/profile")
     @ResponseBody
-    public ResponseEntity<ApiResult> updateProfile(@RequestBody ProfileRequestDto profileRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<ApiResponseDto> updateProfile(@RequestBody ProfileRequestDto profileRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try{
             userService.updateProfile(profileRequestDto, userDetails.getUser());
-            return ResponseEntity.ok().body(new ApiResult("프로필 수정 성공", HttpStatus.OK.value()));
+            return ResponseEntity.ok().body(new ApiResponseDto("프로필 수정 성공", HttpStatus.OK.value()));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new ApiResult("작성자만 수정 가능합니다", HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new ApiResponseDto("작성자만 수정 가능합니다", HttpStatus.BAD_REQUEST.value()));
         }
     }
 
-    @GetMapping("/mypage")
-    @ResponseBody
-    public String mypage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model){
+    @GetMapping("/my-page")
+    public String myPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model){
         String email = userDetails.getUser().getEmail();
         String username = userDetails.getUsername();
         String oneLiner = userDetails.getUser().getOneLiner();
@@ -99,5 +96,12 @@ public class UserController {
         model.addAttribute("oneLiner", oneLiner);
 
         return "profile";
+    }
+
+    // username 중복 체크
+    @PostMapping("/signup/confirm-username/{username}")
+    @ResponseBody
+    public void checkUsername(@PathVariable("username") String username) {
+        userService.checkUsername(username);
     }
 }

@@ -1,5 +1,7 @@
 package com.sparta.community.user.service;
 
+import com.sparta.community.user.dto.ProfileRequestDto;
+import com.sparta.community.user.dto.ProfileResponseDto;
 import com.sparta.community.user.repository.SignupAuthRepository;
 import com.sparta.community.user.dto.SignupRequestDto;
 import com.sparta.community.user.entity.User;
@@ -27,6 +29,7 @@ public class UserService {
         String password = passwordEncoder.encode(requestDto.getPassword());
         String username = requestDto.getUsername();
         String email = requestDto.getEmail();
+        String oneLiner = requestDto.getOneLiner();
 
         // username 중복 확인
         checkUsername(requestDto.getUsername());
@@ -46,7 +49,7 @@ public class UserService {
 
 
         // 사용자 DB에 등록
-        userRepository.save(new User(requestDto, password, email, role));
+        userRepository.save(new User(username, password, email, oneLiner, role));
     }
 
     // username 중복 확인

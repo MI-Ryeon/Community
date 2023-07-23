@@ -45,13 +45,12 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: `/it/users/user/my-page`, // 값 읽어오기를 수행할 controller
+                    url: `/it/users/my-page`, // 값 읽어오기를 수행할 controller
                     contentType: 'application/json',
                 })
                     .done(function (res) {
                         // res (요청 객체)의 값 읽어오기
                         const username = res.username;
-                        const nickname = res.nickname;
                         const email = res.email;
                         const oneLiner = res.oneLiner;
 
@@ -73,7 +72,7 @@
                     });
 
             } else {
-                window.location.href = host + '/it/users/login-page';
+                window.location.href = host + '/it/users/mypage';
                 return;
             }
         })

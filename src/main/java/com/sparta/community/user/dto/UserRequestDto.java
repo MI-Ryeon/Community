@@ -24,7 +24,7 @@ public class UserRequestDto {
     @NotBlank
     private String oneLiner;
 
-    private String ImgUrl;
+    private String imgUrl;
 
     // 권한
     private boolean admin = false;
