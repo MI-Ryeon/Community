@@ -16,12 +16,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // 로그인 시 사용 (ayboori)
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String email;
     // 한줄 소개
     @Column
@@ -37,24 +36,6 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-
-//    public User(SignupRequestDto signupRequestDto, String password, UserRoleEnum role) {
-//        this.username = signupRequestDto.getUsername();
-//        this.password = password;
-//        this.email = signupRequestDto.getEmail();
-//        this.oneLiner = signupRequestDto.getOneLiner();
-//        this.role = role;
-//        this.imgUrl = "";
-//    }
-
-    // User 받기?
-//    public User(UserRequestDto userRequestDto) {
-//        this.username = userRequestDto.getUsername();
-//        this.email = userRequestDto.getEmail();
-//        this.oneLiner = userRequestDto.getOneLiner();
-//        this.imgUrl = "";
-//    }
-
     public User(String username, String password, String email, String oneLiner, String nickname, UserRoleEnum role) {
         this.username = username;
         this.password = password;
@@ -63,19 +44,5 @@ public class User {
         this.nickname = nickname;
         this.role = role;
     }
-
-    // 회원정보 수정
-//    public void update(ProfileRequestDto requestDto) {
-//        this.username = requestDto.getUsername();
-//        this.oneLiner = requestDto.getOneLiner();
-//    }
-
-//    public User(UserUpdateDto userupdateDto) {
-//        this.username = userupdateDto.getUsername();
-//        this.oneLiner = userupdateDto.getOneLiner();
-//        this.imgUrl = userupdateDto.getImgUrl();
-//    }
-
-
 }
 

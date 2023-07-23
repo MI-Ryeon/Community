@@ -68,7 +68,7 @@ public class UserController {
     // 프로필 보기
     @GetMapping("/profile")
     @ResponseBody
-    public ProfileResponseDto getProfile (@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ProfileResponseDto getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.getProfile(userDetails.getUser().getId());
     }
 
@@ -77,7 +77,7 @@ public class UserController {
     @PutMapping("/profile")
     @ResponseBody
     public ResponseEntity<ApiResponseDto> updateProfile(@RequestBody ProfileRequestDto profileRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        try{
+        try {
             userService.updateProfile(profileRequestDto, userDetails.getUser());
             return ResponseEntity.ok().body(new ApiResponseDto("프로필 수정 성공", HttpStatus.OK.value()));
         } catch (IllegalArgumentException e) {
@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @GetMapping("/my-page")
-    public String myPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model){
+    public String myPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
         String email = userDetails.getUser().getEmail();
         String username = userDetails.getUsername();
         String oneLiner = userDetails.getUser().getOneLiner();

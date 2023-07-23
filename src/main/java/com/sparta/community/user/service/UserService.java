@@ -2,13 +2,12 @@ package com.sparta.community.user.service;
 
 import com.sparta.community.user.dto.ProfileRequestDto;
 import com.sparta.community.user.dto.ProfileResponseDto;
-import com.sparta.community.user.repository.SignupAuthRepository;
 import com.sparta.community.user.dto.SignupRequestDto;
 import com.sparta.community.user.entity.User;
 import com.sparta.community.user.entity.UserRoleEnum;
+import com.sparta.community.user.repository.SignupAuthRepository;
 import com.sparta.community.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +59,7 @@ public class UserService {
             throw new IllegalArgumentException("입력하신 ID는 이미 존재하는 ID 입니다.");
         }
     }
+
     // email 중복 확인
     public void checkEmail(String email) {
         Optional<User> checkEmail = userRepository.findByEmail(email);
