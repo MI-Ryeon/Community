@@ -55,13 +55,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 토큰을 만들고
         String token = jwtUtil.createToken(username, role);
+        log.info("확인", token);
         // 헤더에 담아준다
         // response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
 
         jwtUtil.addJwtToCookie(token, response);
 
-
-//        StatusResponseDto responseDto = new StatusResponseDto("로그인 성공", response.getStatus());
+        // StatusResponseDto responseDto = new StatusResponseDto("로그인 성공", response.getStatus());
     }
 
     @Override

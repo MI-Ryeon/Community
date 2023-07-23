@@ -159,7 +159,6 @@ function confirm_authcode() {
         url: '/it/users/email/confirm-authcode',
         contentType: "application/json",
         data : JSON.stringify({email:email, authCode: input})
-
     }).done(function (data, textStatus, xhr) {
         if (data !== '') {
             alert('유효한 코드가 아닙니다');

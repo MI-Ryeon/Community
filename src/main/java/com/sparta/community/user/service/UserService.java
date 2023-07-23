@@ -1,9 +1,11 @@
 package com.sparta.community.user.service;
 
-import com.sparta.community.user.repository.SignupAuthRepository;
+import com.sparta.community.user.dto.ProfileRequestDto;
+import com.sparta.community.user.dto.ProfileResponseDto;
 import com.sparta.community.user.dto.SignupRequestDto;
 import com.sparta.community.user.entity.User;
 import com.sparta.community.user.entity.UserRoleEnum;
+import com.sparta.community.user.repository.SignupAuthRepository;
 import com.sparta.community.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +16,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -25,6 +26,10 @@ public class UserService {
     public void signup(SignupRequestDto requestDto) {
         // pw 변환
         String password = passwordEncoder.encode(requestDto.getPassword());
+        String username = requestDto.getUsername();
+        String email = requestDto.getEmail();
+        String oneLiner = requestDto.getOneLiner();
+        String nickname = requestDto.getNickname();
 
         // username 중복 확인
         checkUsername(requestDto.getUsername());
@@ -44,7 +49,7 @@ public class UserService {
 
 
         // 사용자 DB에 등록
-        userRepository.save(new User(requestDto, password, role));
+        userRepository.save(new User(username, password, email, oneLiner, nickname, role));
     }
 
     // username 중복 확인
@@ -64,4 +69,25 @@ public class UserService {
             throw new IllegalArgumentException("이미 회원가입 된 이메일 입니다.");
         }
     }
+
+
+    // 프로필 보기
+    public ProfileResponseDto getProfile(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("사용자를 찾을 수 없습니다.")
+        );
+        return new ProfileResponseDto(user);
+    }
+
+
+    // 회원정보 수정 (username,한줄소개)
+    @Transactional
+    public void updateProfile(ProfileRequestDto requestDto, User user) {
+        User userItem = userRepository.findById(user.getId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다.")
+        );
+        userItem.setNickname(requestDto.getNickname());
+        userItem.setOneLiner(requestDto.getOneLiner());
+    }
+
 }

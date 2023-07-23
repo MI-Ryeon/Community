@@ -72,7 +72,6 @@ public class JwtUtil {
     /* 2. 생성된 JWT를 Cookie에 저장 */
     // JWT Cookie에 저장
     public void addJwtToCookie(String token, HttpServletResponse res) throws IOException {
-
         try {
             // Cookie Value에는 공백이 불가능해서 encoding 진행
             token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20");
@@ -82,7 +81,6 @@ public class JwtUtil {
 
             // Response 객체에 Cookie 추가
             res.addCookie(cookie);
-
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage());
             throw new IOException(e.getMessage());

@@ -50,23 +50,29 @@ public class WebSecurityConfig {
         // CSRF 설정
         http.csrf((csrf) -> csrf.disable());
 
-        // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
+        // 기본 설정인 Session 방식을 사용하지 않고 JWT 방식을 사용하기 위한 설정
         http.sessionManagement((sessionManagement) ->
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
 
         http.authorizeHttpRequests((authorizeHttpRequests) ->
                 authorizeHttpRequests
+                        // resources 접근 허용 설정
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
+                        // "/api/"로 시작하는 요청 모두 접근 허가
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/it/users/**").permitAll() // '/it/users/'로 시작하는 요청 모두 접근 허가
                         .requestMatchers(HttpMethod.GET, "/it/admin/**").permitAll() // 공지 조회하는 모든 요청 접근 허가
-                        .anyRequest().authenticated() // 그 외 모든 요청 인증처리
+                        .requestMatchers(HttpMethod.GET, "/it/posts").permitAll()
+                        // 그 외 모든 요청 인증 처리
+                        .anyRequest().authenticated()
         );
 
         http.formLogin((formLogin) ->
                 formLogin
                         .loginPage("/it/users/login-page").permitAll()
+                        .loginProcessingUrl("/it/users/login").permitAll()
+                        .defaultSuccessUrl("/")//로그인 성공 시 이동될 경로
         );
 
         // 필터 관리
@@ -79,7 +85,6 @@ public class WebSecurityConfig {
                         // "접근 불가" 페이지 URL 설정
                         .accessDeniedPage("/forbidden.html")
         );
-
         return http.build();
     }
 }

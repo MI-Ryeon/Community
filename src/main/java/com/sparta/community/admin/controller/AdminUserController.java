@@ -5,7 +5,7 @@ import com.sparta.community.admin.dto.AdminUserResponseDto;
 import com.sparta.community.admin.dto.AdminUserRoleRequestDto;
 import com.sparta.community.admin.service.AdminUserService;
 import com.sparta.community.common.dto.ApiResponseDto;
-import com.sparta.community.user.dto.UserRequestDto;
+import com.sparta.community.user.dto.ProfileRequestDto;
 import com.sparta.community.user.entity.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,13 +31,12 @@ public class AdminUserController {
     @GetMapping("/{id}/profile")
     public ResponseEntity<AdminUserResponseDto> getUserById(@PathVariable Long id) {
         AdminUserResponseDto result = adminUserService.getUserById(id);
-
         return ResponseEntity.ok().body(result);
     }
 
     // 회원 정보 수정
     @PutMapping("/{id}/profile")
-    public ResponseEntity<ApiResponseDto> updateProfile(@PathVariable Long id, @RequestBody UserRequestDto requestDto) {
+    public ResponseEntity<ApiResponseDto> updateProfile(@PathVariable Long id, @RequestBody ProfileRequestDto requestDto) {
         adminUserService.updateUserProfile(id, requestDto);
         return ResponseEntity.ok().body(new ApiResponseDto("회원 정보 수정 완료", HttpStatus.OK.value()));
     }
@@ -54,12 +53,5 @@ public class AdminUserController {
     public ResponseEntity<ApiResponseDto> deleteUser(@PathVariable Long id) {
         adminUserService.deleteUser(id);
         return ResponseEntity.ok().body(new ApiResponseDto("회원 탈퇴 완료", HttpStatus.OK.value()));
-    }
-
-    // 회원 차단
-    @PutMapping("/block/{id}")
-    public ResponseEntity<ApiResponseDto> blockUser(@PathVariable Long id) {
-        adminUserService.blockUser(id);
-        return ResponseEntity.ok().body(new ApiResponseDto("회원 차단 완료", HttpStatus.OK.value()));
     }
 }

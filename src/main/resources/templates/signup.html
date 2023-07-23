@@ -15,7 +15,7 @@
 </head>
 <body>
 <div id="signup-form">
-    <div id="login-title">Sign up Interview Feed</div>
+    <div id="login-title">회원가입 페이지</div>
 
     <form action="/it/users/signup" method="post">
         <div class="login-id-label">아이디</div>
@@ -47,7 +47,10 @@
         </div>
 
         <div class="login-id-label">한줄소개</div>
-        <input type="text" name="oneLine" placeholder="oneLine" class="login-input-box">
+        <input type="text" name="oneLiner" placeholder="oneLiner" class="login-input-box">
+
+        <div class="login-id-label">닉네임</div>
+        <input type="text" name="nickname" placeholder="nickname" class="login-input-box">
 
         <div>
             <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자

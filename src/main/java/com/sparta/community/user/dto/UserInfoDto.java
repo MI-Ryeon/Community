@@ -7,6 +7,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserInfoDto {
-    String username;
-
+    private String username;
+    private String email;
+    private String oneLiner;
+    private String imgUrl;
 }

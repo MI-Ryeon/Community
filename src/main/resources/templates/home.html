@@ -14,16 +14,16 @@
 
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/basic.js"></script>
-  <title>Interview Feed</title>
+  <title>백오피스 프로젝트</title>
 </head>
 <body>
 <div class="header" style="position:relative;">
   <!--headr-->
-  <div id="header-title-login-user">
-    <span id="username"></span> 님의
+  <div id="header-title-login-user" onclick="window.location.href='/it/users/mypage'">
+    <span id="username" th:text="${username}"></span> 님
   </div>
   <div id="header-title-interview-feed">
-    피드
+    안녕하세요
   </div>
   <a id="login-text" href="javascript:logout()">
     로그아웃

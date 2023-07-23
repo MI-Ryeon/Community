@@ -1,7 +1,5 @@
 package com.sparta.community.user.entity;
 
-import com.sparta.community.user.dto.SignupRequestDto;
-import com.sparta.community.user.dto.UserRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +16,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // 로그인 시 사용 (ayboori)
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
@@ -27,20 +24,26 @@ public class User {
     private String email;
     // 한줄 소개
     @Column
-    private String oneLine;
+    private String oneLiner;
+    // 이미지
     @Column
+    private String imgUrl;
+
+    @Column
+    private String nickname;
+
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
     private Long kakaoId;
 
-    public User(SignupRequestDto signupRequestDto, String password, UserRoleEnum role) {
-        this.username = signupRequestDto.getUsername();
+    public User(String username, String password, String email, String oneLiner, String nickname, UserRoleEnum role) {
+        this.username = username;
         this.password = password;
-
-        this.email = signupRequestDto.getEmail();
-
-        this.oneLine = signupRequestDto.getOneLine();
+        this.email = email;
+        this.oneLiner = oneLiner;
+        this.nickname = nickname;
         this.role = role;
     }
 
@@ -55,24 +58,6 @@ public class User {
     public User kakaoIdUpdate(Long kakaoId) {
         this.kakaoId = kakaoId;
         return this;
-    }
-
-
-
-    // User 받기?
-    public User(UserRequestDto userRequestDto) {
-        this.username = userRequestDto.getUsername();
-
-        this.email = userRequestDto.getEmail();
-
-        this.oneLine = userRequestDto.getOneLine();
-    }
-
-    // 수정
-    public void update(UserRequestDto requestDto) {
-        this.username = requestDto.getUsername();
-        this.email = requestDto.getEmail(); // 이메일 수정...??
-        this.oneLine = requestDto.getOneLine();
     }
 }
 

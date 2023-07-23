@@ -1,4 +1,4 @@
-package com.sparta.community.post.dto;
+package com.sparta.community.admin.dto;
 
 import com.sparta.community.admin.entity.Notice;
 import com.sparta.community.comment.dto.CommentResponseDto;
@@ -18,7 +18,6 @@ public class NoticeResponseDto {
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private Integer likePost;
     private List<CommentResponseDto> comments;
 
     public NoticeResponseDto(Notice notice) {

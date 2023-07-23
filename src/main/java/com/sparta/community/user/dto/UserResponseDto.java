@@ -13,5 +13,7 @@ import lombok.Setter;
 public class UserResponseDto {
     private String username; // 로그인 시 사용할 아이디
     private String email;
-    private String oneLine;     // 한줄 소개
+    private String oneLiner;     // 한줄 소개
+    private String nickname;
+    private String imgUrl;
 }

@@ -1,8 +1,11 @@
 package com.sparta.community.user.controller;
 
+import com.sparta.community.common.dto.ApiResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.community.common.jwt.JwtUtil;
 import com.sparta.community.common.security.UserDetailsImpl;
+import com.sparta.community.user.dto.ProfileRequestDto;
+import com.sparta.community.user.dto.ProfileResponseDto;
 import com.sparta.community.user.dto.SignupRequestDto;
 import com.sparta.community.user.dto.UserInfoDto;
 import com.sparta.community.user.service.KakaoService;
@@ -12,8 +15,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -49,22 +55,52 @@ public class UserController {
             }
             return "redirect:/it/users/signup-page";
         }
-
-
         userService.signup(requestDto);
-
         return "redirect:/it/users/login-page";
     }
 
     // 회원 관련 정보 받기
-    // 마이페이지 인가?
     @GetMapping("/user-info")
     @ResponseBody
     public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         String username = userDetails.getUser().getUsername();
+        String email = userDetails.getUser().getEmail();
+        String oneLiner = userDetails.getUser().getOneLiner();
+        String imgUrl = userDetails.getUser().getImgUrl();
 
-        return new UserInfoDto(username);
+        return new UserInfoDto(username, email, oneLiner, imgUrl);
     }
+    // 프로필 보기
+    @GetMapping("/profile")
+    @ResponseBody
+    public ProfileResponseDto getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.getProfile(userDetails.getUser().getId());
+    }
+
+    // 회원정보 수정
+    // 프로필 창 띄어주는 컨트롤러 호출 redirect:~
+    @PutMapping("/profile")
+    @ResponseBody
+    public ResponseEntity<ApiResponseDto> updateProfile(@RequestBody ProfileRequestDto profileRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try {
+            userService.updateProfile(profileRequestDto, userDetails.getUser());
+            return ResponseEntity.ok().body(new ApiResponseDto("프로필 수정 성공", HttpStatus.OK.value()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ApiResponseDto("작성자만 수정 가능합니다", HttpStatus.BAD_REQUEST.value()));
+        }
+    }
+
+    @GetMapping("/my-page")
+    public String myPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+        String email = userDetails.getUser().getEmail();
+        String username = userDetails.getUsername();
+        String oneLiner = userDetails.getUser().getOneLiner();
+
+        model.addAttribute("email", email);
+        model.addAttribute("username", username);
+        model.addAttribute("oneLiner", oneLiner);
+
+        return "profile";
 
     // username 중복 체크
     @PostMapping("/signup/confirm-username/{username}")
