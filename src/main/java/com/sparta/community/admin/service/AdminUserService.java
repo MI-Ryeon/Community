@@ -3,10 +3,12 @@ package com.sparta.community.admin.service;
 import com.sparta.community.admin.dto.AdminUserListResponseDto;
 import com.sparta.community.admin.dto.AdminUserResponseDto;
 import com.sparta.community.admin.dto.AdminUserRoleRequestDto;
+import com.sparta.community.comment.repository.CommentLikeRepository;
 import com.sparta.community.comment.repository.CommentNoticeRepository;
 import com.sparta.community.comment.repository.CommentPostRepository;
 import com.sparta.community.follow.repository.FollowRepository;
 import com.sparta.community.post.entity.Post;
+import com.sparta.community.post.repository.PostLikeRepository;
 import com.sparta.community.post.repository.PostRepository;
 import com.sparta.community.user.dto.ProfileRequestDto;
 import com.sparta.community.user.entity.User;
@@ -30,6 +32,8 @@ public class AdminUserService {
     private final CommentNoticeRepository commentNoticeRepository;
     private final FollowRepository followRepository;
     private final SignupAuthRepository signupAuthRepository;
+    private final CommentLikeRepository commentLikeRepository;
+    private final PostLikeRepository postLikeRepository;
 
     // 회원 전체 조회 > 리스트
     public AdminUserListResponseDto getUsers() {
@@ -71,7 +75,7 @@ public class AdminUserService {
         user.setRole(requestDto.getRole());
     }
 
-    // 회원 탈퇴 : 댓글 삭제 -> 게시글 삭제 -> 회원 탈퇴
+    // 회원 탈퇴 : 좋아요, 팔로우, 댓글, 게시글, 이메일인증 데이터베이스 정리
     public void deleteUser(Long id) {
         User user = findUser(id);
 
@@ -93,6 +97,14 @@ public class AdminUserService {
 
         if (signupAuthRepository.findById(id).isPresent()) {
             signupAuthRepository.deleteById(id);
+        }
+
+        if (commentLikeRepository.findById(id).isPresent()) {
+            commentLikeRepository.deleteById(id);
+        }
+
+        if (postLikeRepository.findById(id).isPresent()) {
+            postLikeRepository.deleteById(id);
         }
 
         List<Post> postList = postRepository.findAllByUser(user);
