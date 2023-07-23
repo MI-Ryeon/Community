@@ -30,15 +30,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         // 헤더에서 토큰 가져오기
-        String tokenValue = jwtUtil.getTokenFromRequest(request);
-
+        String tokenValue = jwtUtil.getJwtFromHeader(request);
         // 확인
         if (StringUtils.hasText(tokenValue)) {
-
-            // JWT 토큰 substring
-            tokenValue = jwtUtil.substringToken(tokenValue);
-            log.info(tokenValue);
-
             // 검증
             if (!jwtUtil.validateToken(tokenValue)) {
                 log.error("Token Error");

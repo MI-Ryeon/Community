@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Base64;
@@ -88,18 +87,7 @@ public class JwtUtil {
     }
 
     /* 3. Cookie에 들어있던 JWT 토큰을 Substring */
-    // JWT 토큰 substring
-    public String substringToken(String tokenValue) {
-
-        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-            return tokenValue.substring(7);
-        }
-        logger.error("Not Found Token");
-        throw new NullPointerException("Not Found Token");
-    }
-
-
-    // header에서 JWT 가져오기
+    // header에서 JWT 가져오면서 Substring
     public String getJwtFromHeader(HttpServletRequest request) {
 
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
@@ -109,9 +97,7 @@ public class JwtUtil {
         return null;
     }
 
-
     /* 4. JWT 검증 */
-
     // 토큰 검증
     public boolean validateToken(String token) {
         try {
@@ -135,26 +121,5 @@ public class JwtUtil {
     // 토큰에서 사용자 정보 가져오기
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-    }
-
-    // HttpServletRequest 에서 Cookie Value : JWT 가져오기
-    public String getTokenFromRequest(HttpServletRequest request) {
-
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(AUTHORIZATION_HEADER)) {
-                    try {
-                        // Encode 되어 넘어간 Value를 다시 Decode
-                        return URLDecoder.decode(cookie.getValue(), "UTF-8");
-
-                    } catch (UnsupportedEncodingException e) {
-                        return null;
-                    }
-                }
-            }
-        }
-
-        return null;
     }
 }
