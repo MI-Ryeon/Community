@@ -101,6 +101,7 @@ public class UserController {
         model.addAttribute("oneLiner", oneLiner);
 
         return "profile";
+    }
 
     // username 중복 체크
     @PostMapping("/signup/confirm-username/{username}")
@@ -109,7 +110,7 @@ public class UserController {
         userService.checkUsername(username);
     }
 
-    @GetMapping("/users/login/kakao/callback")
+    @GetMapping("/kakao/callback")
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         String token = kakaoService.kakaoLogin(code);
 
