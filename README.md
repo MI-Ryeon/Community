@@ -1,6 +1,6 @@
 # 잇(IST / IT)조 백오피스 프로젝트
 
-## 사용 기술
+## 기술 스택
 ![image](https://github.com/MI-Ryeon/Community/assets/133615790/db93da25-9467-413d-bd1b-f6d7404d4853)
 
 ## RESTful API
